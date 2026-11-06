@@ -1,0 +1,2 @@
+
+562f78f80602e4eefbe4e4e0a71550a05b356d01	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/semver","integrity":null,"time":1793892948652,"size":"262","metadata":{"time":1793892948652,"url":"https://registry.npm.taobao.org/semver","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:48 GMT","location":"https://registry.npmmirror.com/semver"},"options":{"compress":true},"status":301}}

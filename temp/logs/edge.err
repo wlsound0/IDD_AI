@@ -1,0 +1,4 @@
+[1106/223130.558:ERROR:third_party\crashpad\crashpad\client\crashpad_client_win.cc:441] OpenProcess: 拒绝访问。 (0x5)
+[1106/223130.574:ERROR:third_party\crashpad\crashpad\util\file\file_io_win.cc:188] CreateFile C:\Users\julie\AppData\Local\Microsoft\Edge\User Data\Crashpad\throttle_store.dat: 拒绝访问。 (0x5)
+[4876:21092:1106/223131.040:ERROR:chrome\browser\process_singleton_win.cc:868] Lock file can not be created! Error code: 5
+[4876:21092:1106/223131.177:ERROR:chrome\app\chrome_main_delegate.cc:672] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.

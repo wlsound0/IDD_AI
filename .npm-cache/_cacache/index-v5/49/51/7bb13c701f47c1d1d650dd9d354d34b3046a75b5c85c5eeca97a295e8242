@@ -1,0 +1,2 @@
+
+27b8267fa551323bb7acf53e86f56a7d6f78390c	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/jsdom","integrity":null,"time":1793892947697,"size":"262","metadata":{"time":1793892947697,"url":"https://registry.npm.taobao.org/jsdom","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:47 GMT","location":"https://registry.npmmirror.com/jsdom"},"options":{"compress":true},"status":301}}

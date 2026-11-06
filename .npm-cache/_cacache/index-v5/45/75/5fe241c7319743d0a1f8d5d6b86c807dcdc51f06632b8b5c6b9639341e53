@@ -1,0 +1,2 @@
+
+25dce3310aba01f41841d520dfd59323ca6a1973	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/@vitest%2futils","integrity":null,"time":1793892948067,"size":"262","metadata":{"time":1793892948067,"url":"https://registry.npm.taobao.org/@vitest%2futils","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:48 GMT","location":"https://registry.npmmirror.com/@vitest%2futils"},"options":{"compress":true},"status":301}}

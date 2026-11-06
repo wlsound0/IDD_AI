@@ -1,0 +1,2 @@
+
+bf0d71a1fc16b34ac12bdde9834277b6d39935c9	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/@types%2freact-dom","integrity":null,"time":1793892945551,"size":"262","metadata":{"time":1793892945550,"url":"https://registry.npm.taobao.org/@types%2freact-dom","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:45 GMT","location":"https://registry.npmmirror.com/@types%2freact-dom"},"options":{"compress":true},"status":301}}

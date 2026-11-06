@@ -1,0 +1,13 @@
+# Python 虚拟环境及缓存
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Node.js 依赖
+node_modules/
+
+# 常见编辑器配置
+.idea/
+.vscode/
+.DS_Store

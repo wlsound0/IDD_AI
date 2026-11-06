@@ -1,0 +1,2 @@
+
+faa36b9632aebdf0076e4b4e2d490cad71465661	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/yocto-queue","integrity":null,"time":1793892950673,"size":"262","metadata":{"time":1793892950673,"url":"https://registry.npm.taobao.org/yocto-queue","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:50 GMT","location":"https://registry.npmmirror.com/yocto-queue"},"options":{"compress":true},"status":301}}

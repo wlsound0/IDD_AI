@@ -1,0 +1,2 @@
+
+5c25eafaa0ee550af9e4002b3be545da8fc7eda1	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/cac","integrity":null,"time":1793892950496,"size":"262","metadata":{"time":1793892950496,"url":"https://registry.npm.taobao.org/cac","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:50 GMT","location":"https://registry.npmmirror.com/cac"},"options":{"compress":true},"status":301}}

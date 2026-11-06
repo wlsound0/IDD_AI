@@ -1,0 +1,2 @@
+
+5136dacb3bf41bd534c6762983e02310c5dbcf76	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/@jridgewell%2fremapping","integrity":null,"time":1793892948648,"size":"262","metadata":{"time":1793892948648,"url":"https://registry.npm.taobao.org/@jridgewell%2fremapping","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:48 GMT","location":"https://registry.npmmirror.com/@jridgewell%2fremapping"},"options":{"compress":true},"status":301}}

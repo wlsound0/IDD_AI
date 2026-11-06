@@ -1,0 +1,2 @@
+
+9e459805b8df5c622dbaacd4ce86962f27257c08	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/human-signals","integrity":null,"time":1793892950482,"size":"262","metadata":{"time":1793892950482,"url":"https://registry.npm.taobao.org/human-signals","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:50 GMT","location":"https://registry.npmmirror.com/human-signals"},"options":{"compress":true},"status":301}}

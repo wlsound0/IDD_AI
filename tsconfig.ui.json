@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "module": "AMD",
+    "moduleResolution": "Node",
+    "isolatedModules": false,
+    "rootDir": "core",
+    "outFile": "temp/build/ui/core.raw.js",
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["core"]
+}

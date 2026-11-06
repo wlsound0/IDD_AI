@@ -1,0 +1,2 @@
+
+fec3abc76b163663417bca65579729d603947ee8	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/@types%2fprop-types","integrity":null,"time":1793892947960,"size":"262","metadata":{"time":1793892947960,"url":"https://registry.npm.taobao.org/@types%2fprop-types","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:47 GMT","location":"https://registry.npmmirror.com/@types%2fprop-types"},"options":{"compress":true},"status":301}}

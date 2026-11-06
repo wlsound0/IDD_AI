@@ -1,0 +1,109 @@
+{
+  "items": [
+    {
+      "id": "wangyouzhixiang",
+      "name": "忘忧之香",
+      "cost": 1000,
+      "timing": "active",
+      "text": "记录当前血量，在己方回合内任意时刻，回到记录的血量，若血量没有改变，则其获得一点临时血量，持续到下个友方回合开始。下个友方回合结束后失效。"
+    },
+    {
+      "id": "huwan",
+      "name": "护腕",
+      "cost": 1000,
+      "timing": "active",
+      "text": "抉择：使一个角色攻击力+1，持续到友方回合结束。 或 使一个角色获得一点临时血量，持续到下个友方回合开始。"
+    },
+    {
+      "id": "huaibiao",
+      "name": "怀表",
+      "cost": 2000,
+      "timing": "active",
+      "text": "使一个角色受到的攻击伤害减一，持续到下个友方回合开始。"
+    },
+    {
+      "id": "jixiewanou",
+      "name": "机械玩偶",
+      "cost": 2000,
+      "timing": "active",
+      "text": "召唤一个机械娃娃。\n机械娃娃\n面板：1/1\n不可被救援，己方场上只能有一个“机械娃娃”，刚上场时无法攻击。"
+    },
+    {
+      "id": "ranshaodan",
+      "name": "燃烧弹",
+      "cost": 1000,
+      "timing": "active",
+      "text": "封禁一个角色的技能，持续到下个友方回合开始。"
+    },
+    {
+      "id": "lengquedan",
+      "name": "冷却弹",
+      "cost": 1000,
+      "timing": "active",
+      "text": "使对方下一次道具的使用费用+2，持续到下个友方回合开始。"
+    },
+    {
+      "id": "niantudan",
+      "name": "粘土弹",
+      "cost": 1000,
+      "timing": "active",
+      "text": "使一个角色攻击力-1，持续到下个友方回合开始。"
+    },
+    {
+      "id": "ganlanqiu",
+      "name": "橄榄球",
+      "cost": 2000,
+      "timing": "active",
+      "text": "对一个角色造成1点伤害。可以无限次选择：同时额外使用一个橄榄球和1k，使本次伤害+1。"
+    },
+    {
+      "id": "shoudiantong",
+      "name": "手电筒",
+      "cost": 2000,
+      "timing": "active",
+      "text": "封一个角色的技能，持续一回合。"
+    },
+    {
+      "id": "banche",
+      "name": "板车",
+      "cost": 1000,
+      "timing": "active",
+      "text": "召唤“板车”。\n板车：0/2，不视为角色，弹射！！！（上场的第一回合不可使用，CD：1）：使一个角色获得“无敌”，持续一回合，无敌期间封其技能，使其不可攻击。"
+    },
+    {
+      "id": "moshubang",
+      "name": "魔术棒",
+      "cost": 1000,
+      "timing": "active",
+      "text": "将要受到攻击时使用，使本次受到的伤害减半（向下取整），并使下次魔术棒花费+1。"
+    },
+    {
+      "id": "huazuo",
+      "name": "画作（某角色）",
+      "cost": 2000,
+      "timing": "active",
+      "text": "使一个本画作的同名角色下回合无法攻击。"
+    },
+    {
+      "id": "bayinhe",
+      "name": "八音盒",
+      "cost": 1000,
+      "timing": "active",
+      "text": "抉择：使一个角色攻击力+1，其被攻击后效果删除。 或 使一个角色攻击力-1，其攻击后效果删除。"
+    },
+    {
+      "id": "zhenjingji",
+      "name": "镇静剂",
+      "cost": 1000,
+      "timing": "active",
+      "text": "使一个角色回复一点血量。"
+    },
+    {
+      "id": "xinhaoqiang",
+      "name": "信号枪",
+      "cost": 3000,
+      "timing": "active",
+      "text": "造成两点伤害，并使其下一个回合不可攻击。并且下次使用的“信号枪”花费加一。"
+    }
+  ]
+}

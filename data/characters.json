@@ -1,0 +1,1322 @@
+{
+  "characters": [
+    {
+      "id": "xingyuner",
+      "name": "幸运儿",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 1,
+      "skills": [
+        {
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "幸运包裹",
+          "type": "active",
+          "text": "幸运包裹（限一次）：获得一个指定道具。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 1000
+    },
+    {
+      "id": "tiaoxiangshi",
+      "name": "调香师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "调香",
+          "type": "battlecry",
+          "text": "调香：战吼：获得三个“忘忧之香”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 1000
+    },
+    {
+      "id": "xianzhi",
+      "name": "先知",
+      "rarity": "limited",
+      "atk": 3,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "役鸟守护",
+          "type": "charge",
+          "text": "役鸟守护（每两回合充能一次：1/5，第二回合充能第一次）：当有角色将要受到伤害时，可选择免疫此次伤害，先知攻击力减一。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "yongbing",
+      "name": "佣兵",
+      "rarity": "limited",
+      "atk": 1,
+      "hp": 6,
+      "skills": [
+        {
+          "name": "自我救援",
+          "type": "passive",
+          "text": "自我救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "坚强",
+          "type": "passive",
+          "text": "坚强：将要受到伤害时，改为获得等量标记。己方回合结束时，自动尽可能多地减少标记（最多3个），使自身扣除等同于减少的标记数的血量。自身进入濒死状态后将标记清零。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "钢铁冲刺",
+          "type": "battlecry",
+          "text": "钢铁冲刺：战吼：获得三个“护腕”。每回合对佣兵使用的第一个“护腕”不会消耗花费。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "战争后遗症",
+          "type": "passive",
+          "text": "战争后遗症：受伤时，攻击力减一。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 5000
+    },
+    {
+      "id": "shoumuren",
+      "name": "守墓人",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "安心",
+          "type": "passive",
+          "text": "安心：救援不扣血，限一次。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "dafu",
+      "name": "大副",
+      "rarity": "limited",
+      "atk": 1,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "消失",
+          "type": "passive",
+          "text": "消失：受到两点及以上的伤害时，受到的伤害减一。本特质不会因为封技能而失效。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "海神怀表",
+          "type": "battlecry",
+          "text": "海神怀表：战吼：获得两个“怀表”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "失乐园",
+          "type": "passive",
+          "text": "失乐园：限一次，受到致命伤害时，本回合受到的所有伤害转移到本回合结束时结算。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 5000
+    },
+    {
+      "id": "jixieshi",
+      "name": "机械师",
+      "rarity": "epic",
+      "atk": 2,
+      "hp": 1,
+      "skills": [
+        {
+          "name": "机械操纵",
+          "type": "battlecry",
+          "text": "机械操纵：战吼：获得两个“机械玩偶”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "胆怯",
+          "type": "passive",
+          "text": "胆怯：场上每有一个己方角色受伤（血量小于原最大血量），攻击力减一。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "羸弱",
+          "type": "passive",
+          "text": "羸弱：自身反伤造成的伤害减一。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "zajiyanyuan",
+      "name": "杂技演员",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援，限一次。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "危险杂耍",
+          "type": "battlecry",
+          "text": "危险杂耍：战吼：获得“燃烧弹”、“冷却弹”、“粘土弹”各一个。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "即兴演出",
+          "type": "passive",
+          "text": "即兴演出：杂技演员救援后，获得一个“粘土弹”。第二个己方回合结束时，若杂技演员存活，获得一个“冷却弹”。杂技演员受到伤害后，获得一个“燃烧弹”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "三心二意",
+          "type": "passive",
+          "text": "三心二意：无法攻击血量为1的角色。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "laladuiyuan",
+      "name": "拉拉队员",
+      "rarity": "limited",
+      "atk": 1,
+      "hp": 5,
+      "skills": [
+        {
+          "name": "鼓舞",
+          "type": "cooldown",
+          "text": "鼓舞（CD：1）：拉拉队员攻击力加二，可再次攻击，持续至本次己方回合结束。下个己方回合开始时，攻击力减一，持续一回合。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 1
+        },
+        {
+          "name": "振奋",
+          "type": "cooldown",
+          "text": "振奋（CD：2）：使一个技能CD-1，若为自己，则改为可立即使用技能。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 2
+        },
+        {
+          "name": "激励",
+          "type": "charge",
+          "text": "激励（每回合充能一次）：雀跃：花费一点充能：使一个其他角色攻击力加一，持续至下次己方回合开始。下次己方回合开始时，其攻击力减一，持续一回合。亢奋：花费三点充能：使一个其他角色回复两点血量。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "kongjun",
+      "name": "空军",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "精准打击",
+          "type": "battlecry",
+          "text": "精准打击：战吼：获得一个“信号枪”。使用获得的“信号枪”后，空军攻击力减一，血量加一，使本次“信号枪”可以封禁其技能。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "jiqiushou",
+      "name": "击球手",
+      "rarity": "normal",
+      "atk": 0,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "使命感",
+          "type": "passive",
+          "text": "使命感：己方一个角色死亡后，攻击力加2，持续到下个友方回合结束。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "爆发",
+          "type": "cooldown",
+          "text": "爆发（CD：1）：本回合，击球手攻击力加一，且击球手攻击的角色攻击力减一，持续一回合。若本技能处于CD状态，则攻击力减一。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 1
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "mangnv",
+      "name": "盲女",
+      "rarity": "normal",
+      "atk": 4,
+      "hp": 1,
+      "skills": [
+        {
+          "name": "回声定位",
+          "type": "passive",
+          "text": "回声定位：受到伤害时，免疫本次伤害，不造成反伤，限一次。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "羸弱",
+          "type": "passive",
+          "text": "羸弱：自身反伤造成的伤害减一。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "qiutu",
+      "name": "囚徒",
+      "rarity": "epic",
+      "atk": 3,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "强电流",
+          "type": "active",
+          "text": "强电流（限一次）：造成一点伤害。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "线路控制",
+          "type": "active",
+          "text": "线路控制（每回合限一次）：自己减一攻击力，使一个友方角色加一攻击力。限一次选择：花费1k，改为自己减三攻击力，使一个友方角色加二攻击力。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "过度专注",
+          "type": "passive",
+          "text": "过度专注：自己攻击和反伤造成的伤害减半（向下取整）。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "lvshi",
+      "name": "律师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "要点记录",
+          "type": "passive",
+          "text": "要点记录：回合结束时，攻击力、血量各+1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "maoxianjia",
+      "name": "冒险家",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "探险幻想",
+          "type": "passive",
+          "text": "探险幻想：回合结束时，攻击力+2。攻击后，攻击力改为2。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "密码书页",
+          "type": "passive",
+          "text": "密码书页：亡计：指定一个角色，使其获得自身当前攻击力的攻击力，持续至下一个友方回合结束。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "格列佛游记",
+          "type": "passive",
+          "text": "格列佛游记：有其他队友存活时，获得“不可被攻击”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "xinlixuejia",
+      "name": "心理学家",
+      "rarity": "normal",
+      "atk": 0,
+      "hp": 5,
+      "skills": [
+        {
+          "name": "应激",
+          "type": "passive",
+          "text": "应激：任何时候，血量小于4，则回复两点血量，限两次。攻击力不可高于1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "移情",
+          "type": "cooldown",
+          "text": "移情（CD：0）：将自己的至多两点血转移给一个角色（对方视为回复血量）。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 0
+        },
+        {
+          "name": "牵绊",
+          "type": "passive",
+          "text": "牵绊：可救援“病患”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "binghuan",
+      "name": "病患",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "钩爪逃生",
+          "type": "cooldown",
+          "text": "钩爪逃生（CD：0，限三次）：获得一点临时血量，持续到下个友方回合开始。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 0
+        },
+        {
+          "name": "牵绊",
+          "type": "battlecry",
+          "text": "牵绊：战吼：若心理学家在场上，血量+1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "rulianshi",
+      "name": "入殓师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "入殓",
+          "type": "charge",
+          "text": "入殓（每回合充能：1/1）：给一个友方单位获得附容返生效果（友方场上最多有一个拥有附容返生效果的角色），可随时在友方回合无限次转移该效果。战吼：自己获得附容返生效果。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "附容返生",
+          "type": "passive",
+          "text": "附容返生：可被入殓师救援，且入殓师不会扣血。成功救援后，被救援角色获得一个可以抵挡一次伤害的护盾，且受到的所有致命伤害延迟触发，持续至下个友方回合结束。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "tiaojiushi",
+      "name": "调酒师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "多夫林底酒",
+          "type": "passive",
+          "text": "多夫林底酒（限一次）：受到伤害后，获得无敌，持续到下个友方回合开始。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "烈性多夫林",
+          "type": "active",
+          "text": "烈性多夫林（限两次）：给受伤的友方角色使用，使其回复至满血。然后攻击力减一，持续到下个友方回合开始。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "yeren",
+      "name": "野人",
+      "rarity": "epic",
+      "atk": 0,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援，救援只扣一血，但必扣本体；“野人”不会因封技能而无法救援，但被封技能后救援扣两血，且优先扣除临时血量。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "野性伙伴",
+          "type": "cooldown",
+          "text": "野性伙伴（CD：1）：增加两点临时血量，第一次使用时持续两回合，之后持续一回合。期间野人攻击力+1且攻击时不受到反伤，临时血量扣完时技能自动结束。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 1
+        }
+      ],
+      "cost": 5000
+    },
+    {
+      "id": "jisi",
+      "name": "祭司",
+      "rarity": "limited",
+      "atk": 2,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "门之钥",
+          "type": "charge",
+          "text": "门之钥（每回合充能一次：2/3）：交换一个角色的血量和攻击力（临时增加的血量和攻击力不进行交换，且无法交换攻击力为0的角色）。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "羸弱",
+          "type": "passive",
+          "text": "羸弱：反伤造成的伤害-1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "超长通道",
+          "type": "active",
+          "text": "超长通道（限一次）：使一个角色和自己回复1点血量。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "qianfeng",
+      "name": "前锋",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援，且救援只扣一血。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "机械盲",
+          "type": "passive",
+          "text": "机械盲：无法主动攻击。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "运动天赋",
+          "type": "passive",
+          "text": "运动天赋：无法成为敌方技能和道具的使用对象。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "橄榄球员",
+          "type": "battlecry",
+          "text": "橄榄球员：战吼：获得三个“橄榄球”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "cishanjia",
+      "name": "慈善家",
+      "rarity": "epic",
+      "atk": 0,
+      "hp": 1,
+      "skills": [
+        {
+          "name": "狡猾",
+          "type": "battlecry",
+          "text": "狡猾：战吼：获得两个“手电筒”。“慈善家”攻击的角色下回合无法攻击。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "gudongshang",
+      "name": "古董商",
+      "rarity": "limited",
+      "atk": 2,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "旧伤",
+          "type": "passive",
+          "text": "旧伤：无法攻击血量为1的角色；被血量为1的角色攻击时，不会造成反伤。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "藏锋",
+          "type": "active",
+          "text": "藏锋（耐久度：5）：转式（消耗耐久度：1）：血量+1。扫式（CD：0，消耗耐久度：3）：使下次攻击造成的伤害加1，不受到反伤，且同时对其相邻的两个角色造成1点伤害，并使被攻击的角色攻击力-1，持续一回合。",
+          "cost": null,
+          "durability": 5,
+          "cooldown": null
+        },
+        {
+          "name": "身轻如燕",
+          "type": "passive",
+          "text": "身轻如燕：不会被封技能，不会获得不可攻击效果。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "zhoushushi",
+      "name": "咒术师",
+      "rarity": "normal",
+      "atk": 0,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "猿猴咒像",
+          "type": "charge",
+          "text": "猿猴咒像（自己及相邻的两个角色受到伤害时充能一次：0/5）：咒像守护（消耗充能：1）：对一个角色造成1点伤害。咒像引爆（消耗充能：3）：对一个角色造成2点伤害，并使其下个回合不可攻击。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "wanjushang",
+      "name": "玩具商",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "安抚物",
+          "type": "active",
+          "text": "安抚物：游戏的任意阶段，可获取镇静剂、魔术棒、忘忧之香和钢铁护肘中的任意一个道具，并使其花费减一，限一次。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "玩具匣",
+          "type": "active",
+          "text": "玩具匣（每回合限三次，一回合内不可重复作用于同一个道具）：使一个己方道具花费减一，但本回合不可使用。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "弹射板车",
+          "type": "battlecry",
+          "text": "弹射板车：战吼：获得两个“板车”。玩具商使用板车时，不会被封技能。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "kantanyuan",
+      "name": "勘探员",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "陨石磁铁",
+          "type": "charge",
+          "text": "陨石磁铁（每回合充能：1/3）：抉择：使一个角色减一攻击力，己方回合结束时触发。 或 使一个角色下个回合无法攻击，勘探员受到一点伤害，己方回合结束时触发。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "moshushi",
+      "name": "魔术师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "魔术演绎",
+          "type": "battlecry",
+          "text": "魔术演绎：战吼：获得三个“魔术棒”。“魔术师”使用魔术棒会使伤害降低至最多1点。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "huajia",
+      "name": "画家",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "感性直观",
+          "type": "passive",
+          "text": "感性直观：可被救援两次，被救援时不会使血量上限减半。救援“画家”时，救援者扣的血量-1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "艺术敏感",
+          "type": "passive",
+          "text": "艺术敏感（限两次）：攻击后，获得被攻击者的“画作”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "xiaonvhai",
+      "name": "小女孩",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "记忆同步",
+          "type": "cooldown",
+          "text": "记忆同步（CD：1）：附身一个角色（附身期间“小女孩”获得免疫），使其获得1点临时血量，临时血量扣完时自动结束技能。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 1
+        },
+        {
+          "name": "回忆碎片",
+          "type": "charge",
+          "text": "回忆碎片（记忆同步期间，每回合充能：1/3）：使一个角色攻击力-1，持续一回合。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "xiaoshuojia",
+      "name": "小说家",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "隐喻",
+          "type": "cooldown",
+          "text": "隐喻（CD：1）：与一个角色互换位置（可与敌方角色互换），己方回合结束时换回。换回时，若有一方死亡，则将另一方单方面换回；换回时，若被互换的另一个角色血量小于三，则其血量加一。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 1
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "youcha",
+      "name": "邮差",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "邮件",
+          "type": "cooldown",
+          "text": "邮件（CD：1）：给一个人物送信，使其和自己获得信件效果，“邮差”死亡后失效。\n急切的信件：获得1点临时血量，持续两回合。\n诀别的信件：受到攻击后，回复一点血量，持续一回合。\n冷静的信件：攻击力+1，持续一回合，第一回合无法使用。\n勇敢的信件：救援扣的血减一，持续两回合。\n激励的信件：本回合可再次攻击，但攻击力上限为一。\n希望的信件：加（5-X）点血量，X为己方场上人物数量。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 1
+        },
+        {
+          "name": "送信犬",
+          "type": "active",
+          "text": "送信犬（限一次）：使一个人物攻击力-1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "期待",
+          "type": "unknown",
+          "text": "期待：唔……如果一直没有人送信给自己，为什么自己不先偷看一封呢？",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "feixingjia",
+      "name": "飞行家",
+      "rarity": "limited",
+      "atk": 2,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援；救援时，可选择消耗一个飞行器，使本次救援无伤。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "飞行器",
+          "type": "active",
+          "text": "飞行器（耐久度：3）：己方回合结束时，血量加一（本次血量上限增加会在自己被救援时计入初始血量上限）。",
+          "cost": null,
+          "durability": 3,
+          "cooldown": null
+        },
+        {
+          "name": "悬停",
+          "type": "passive",
+          "text": "悬停：每局游戏，免疫受到的第一次伤害，并且立即触发一次“飞行器”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "特发性震颤",
+          "type": "passive",
+          "text": "特发性震颤：若“飞行家”为己方唯一一个可以救援的角色，则攻击力减一，获得自我救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "muoushi",
+      "name": "木偶师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "“路易”",
+          "type": "passive",
+          "text": "“路易”：本体血量将要减少时，自动扣一点本体血量，获得三点临时血量，持续到本回合结束。若因救援导致使用本技能时，只获得两点临时血量。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "血肉无用",
+          "type": "passive",
+          "text": "血肉无用：不可回复血量。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "jizhe",
+      "name": "记者",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "独家新闻",
+          "type": "cooldown",
+          "text": "独家新闻（CD：0）：抉择：召唤一个“牵制幻影”（限三次）。 或 召唤一个“救援幻影”（限一次）。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 0
+        },
+        {
+          "name": "“勇敢”",
+          "type": "passive",
+          "text": "“勇敢”：被救援后，不会减少血量上限。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "观测视角",
+          "type": "passive",
+          "text": "观测视角：幻影受攻击死后，记者获得一点临时血量，持续至下个友方回合结束。记者存活时，可以主动使幻影死亡。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "wunv",
+      "name": "舞女",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "二重奏",
+          "type": "battlecry",
+          "text": "二重奏：战吼：获得三个“八音盒”。“舞女”使用八音盒后，血量+1，且不会使增益消失。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "杂技",
+          "type": "battlecry",
+          "text": "杂技：战吼：获得一点临时血量，持续至第一回合结束。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "yisheng",
+      "name": "医生",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "医药专精",
+          "type": "battlecry",
+          "text": "医药专精：战吼：获得三个“镇静剂”。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "医术高超",
+          "type": "passive",
+          "text": "医术高超：回合结束时，回满血。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "zuoqujia",
+      "name": "作曲家",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 2,
+      "skills": [
+        {
+          "name": "组曲",
+          "type": "passive",
+          "text": "组曲：每次攻击后，攻击力+1，获得一点临时血量，持续至下个己方回合开始。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "调律",
+          "type": "cooldown",
+          "text": "调律（CD：1）：获得两点临时血量，持续至己方回合结束。本回合可再次攻击，但是不会触发“组曲”的加攻击力效果。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 1
+        },
+        {
+          "name": "静音",
+          "type": "passive",
+          "text": "静音：不能成为敌方角色技能的目标。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    },
+    {
+      "id": "yuanding",
+      "name": "园丁",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 4,
+      "skills": [
+        {
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "守护",
+          "type": "battlecry",
+          "text": "守护：战吼：获得一个可抵挡一次伤害的护盾。回合开始时，若上回合未攻击，则获得一个可抵挡一次伤害的护盾。护盾持续至回合结束。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "巧手匠心",
+          "type": "cooldown",
+          "text": "巧手匠心（CD：0）：有友方角色受到致命伤害时，可使其血量不低于1，将溢出的伤害双倍转移给园丁。",
+          "cost": null,
+          "durability": null,
+          "cooldown": 0
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "kunchongxuezhe",
+      "name": "昆虫学者",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "昆虫研究",
+          "type": "active",
+          "text": "昆虫研究（耐久度：5）：汇聚虫群（消耗耐久度：2）：召唤“虫群”。",
+          "cost": null,
+          "durability": 5,
+          "cooldown": null
+        }
+      ],
+      "cost": 3000
+    },
+    {
+      "id": "maenna",
+      "name": "玛恩纳（联动）",
+      "rarity": "limited",
+      "atk": 0,
+      "hp": 5,
+      "skills": [
+        {
+          "name": "解放者",
+          "type": "passive",
+          "text": "解放者：在未解放时不可攻击，攻击力始终为0。攻击时不受到反伤。解放期间，每回合可攻击两次。解放效果将在本个友方回合结束时消失，解放技能的效果也将一并消失。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "无动于衷",
+          "type": "passive",
+          "text": "无动于衷：所有友方单位不可成为敌方技能或道具的目标。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "游侠",
+          "type": "passive",
+          "text": "游侠： 被救援后，不会减少血量上限。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "未声张的怒火",
+          "type": "passive",
+          "text": "未声张的怒火：玛恩纳不会被封技能或获得不可攻击效果。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "未宽解的悲哀",
+          "type": "passive",
+          "text": "未宽解的悲哀：回合开始时（0），若上个回合使用过“未照耀的荣光”，则解放，攻击力+1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "未照耀的荣光",
+          "type": "cooldown",
+          "text": "未照耀的荣光（初始CD：1，之后CD：2）：解放，攻击力+3，攻击时同时对被攻击角色相邻的两个角色造成两点伤害。本回合己方玛恩纳的每进行一次攻击，造成的所有伤害-1。技能期间，玛恩纳造成的所有伤害不会低于1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 5000
+    },
+    {
+      "id": "leide",
+      "name": "雷德（联动）",
+      "rarity": "epic",
+      "atk": 2,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "59区废墟",
+          "type": "passive",
+          "text": "59区废墟：不可被救援。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "“复仇者”",
+          "type": "passive",
+          "text": "“复仇者”：血量小于3时，攻击力加二。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "整合运动",
+          "type": "passive",
+          "text": "整合运动：限一次，死亡后，复活，复活时血量为2，且免疫下次受到的伤害。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 4000
+    },
+    {
+      "id": "niuzai",
+      "name": "牛仔",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "skills": [
+        {
+          "name": "套索技艺",
+          "type": "cooldown",
+          "text": "套索技艺（耐久度：3，CD：0）：有角色进入濒死状态时，使其保持该状态，期间其所有技能、效果失效，不会成为攻击、技能、道具的目标，不会受到任何效果影响，且不会被救援，但技能CD、充能正常计算，直到下个友方回合开始，若该牛仔存活，则将其救援，且本次救援牛仔不扣血。",
+          "cost": null,
+          "durability": 3,
+          "cooldown": 0
+        },
+        {
+          "name": "保护欲",
+          "type": "passive",
+          "text": "保护欲：有角色进入濒死状态时，获得一点临时血量。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        },
+        {
+          "name": "马背英雄",
+          "type": "passive",
+          "text": "马背英雄：若在有临时血量的状态下受到致命伤害，则使血量不低于1。",
+          "cost": null,
+          "durability": null,
+          "cooldown": null
+        }
+      ],
+      "cost": 2000
+    }
+  ]
+}

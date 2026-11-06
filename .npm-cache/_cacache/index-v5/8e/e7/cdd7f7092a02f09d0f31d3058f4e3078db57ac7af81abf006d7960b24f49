@@ -1,0 +1,2 @@
+
+7272e363e3af5284d15c1ce4c6371110e4eae9dc	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/mlly","integrity":null,"time":1793892950495,"size":"262","metadata":{"time":1793892950495,"url":"https://registry.npm.taobao.org/mlly","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:50 GMT","location":"https://registry.npmmirror.com/mlly"},"options":{"compress":true},"status":301}}

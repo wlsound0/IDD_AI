@@ -1,0 +1,169 @@
+{
+  "summary": {
+    "winner": "second",
+    "bigTurns": 2,
+    "units": [
+      {
+        "id": "F1",
+        "name": "先手一号",
+        "side": "first",
+        "hp": 0,
+        "maxHp": 6,
+        "dead": true
+      },
+      {
+        "id": "F2",
+        "name": "先手二号",
+        "side": "first",
+        "hp": 0,
+        "maxHp": 6,
+        "dead": true
+      },
+      {
+        "id": "S1",
+        "name": "后手一号",
+        "side": "second",
+        "hp": 1,
+        "maxHp": 6,
+        "dead": false
+      },
+      {
+        "id": "S2",
+        "name": "后手二号",
+        "side": "second",
+        "hp": 0,
+        "maxHp": 6,
+        "dead": true
+      }
+    ]
+  },
+  "lines": [
+    "T1-first 攻击 F1->S2 伤害3 剩余1",
+    "T1-first 攻击 F2->S2 伤害1 剩余0",
+    "T1-first 濒死 S2",
+    "T1-first 死亡 S2",
+    "T1 first 小回合结束",
+    "T1-second 攻击 S1->F2 伤害2 剩余3",
+    "T1 second 小回合结束",
+    "T1 大回合结束",
+    "T2-first 攻击 F1->S1 伤害4 剩余3",
+    "T2-first 反伤 S1->F1 伤害3 剩余3",
+    "T2-first 攻击 F2->S1 伤害2 剩余1",
+    "T2-first 反伤 S1->F2 伤害3 剩余0",
+    "T2-first 濒死 F2",
+    "T2-first 死亡 F2",
+    "T2 first 小回合结束",
+    "T2-second 攻击 S1->F1 伤害3 剩余0",
+    "T2-second 濒死 F1",
+    "T2-second 死亡 F1"
+  ],
+  "events": [
+    {
+      "type": "battleStart"
+    },
+    {
+      "type": "attack",
+      "attacker": "F1",
+      "target": "S2",
+      "damage": 3,
+      "hpAfter": 1
+    },
+    {
+      "type": "attack",
+      "attacker": "F2",
+      "target": "S2",
+      "damage": 1,
+      "hpAfter": 0
+    },
+    {
+      "type": "dying",
+      "unit": "S2"
+    },
+    {
+      "type": "death",
+      "unit": "S2"
+    },
+    {
+      "type": "smallTurnEnd",
+      "bigTurn": 1,
+      "phase": "first"
+    },
+    {
+      "type": "attack",
+      "attacker": "S1",
+      "target": "F2",
+      "damage": 2,
+      "hpAfter": 3
+    },
+    {
+      "type": "smallTurnEnd",
+      "bigTurn": 1,
+      "phase": "second"
+    },
+    {
+      "type": "bigTurnEnd",
+      "bigTurn": 1
+    },
+    {
+      "type": "attack",
+      "attacker": "F1",
+      "target": "S1",
+      "damage": 4,
+      "hpAfter": 3
+    },
+    {
+      "type": "reflect",
+      "attacker": "S1",
+      "target": "F1",
+      "damage": 3,
+      "hpAfter": 3
+    },
+    {
+      "type": "attack",
+      "attacker": "F2",
+      "target": "S1",
+      "damage": 2,
+      "hpAfter": 1
+    },
+    {
+      "type": "reflect",
+      "attacker": "S1",
+      "target": "F2",
+      "damage": 3,
+      "hpAfter": 0
+    },
+    {
+      "type": "dying",
+      "unit": "F2"
+    },
+    {
+      "type": "death",
+      "unit": "F2"
+    },
+    {
+      "type": "smallTurnEnd",
+      "bigTurn": 2,
+      "phase": "first"
+    },
+    {
+      "type": "attack",
+      "attacker": "S1",
+      "target": "F1",
+      "damage": 3,
+      "hpAfter": 0
+    },
+    {
+      "type": "dying",
+      "unit": "F1"
+    },
+    {
+      "type": "death",
+      "unit": "F1"
+    },
+    {
+      "type": "victory",
+      "winner": "second",
+      "reason": "annihilation"
+    }
+  ]
+}

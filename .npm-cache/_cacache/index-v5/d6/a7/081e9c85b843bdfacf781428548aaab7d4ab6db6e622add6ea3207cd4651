@@ -1,0 +1,2 @@
+
+3364bfb82cbbefe55baea4d0cfb2441917472a54	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/ansi-styles","integrity":null,"time":1793892950731,"size":"262","metadata":{"time":1793892950730,"url":"https://registry.npm.taobao.org/ansi-styles","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:50 GMT","location":"https://registry.npmmirror.com/ansi-styles"},"options":{"compress":true},"status":301}}

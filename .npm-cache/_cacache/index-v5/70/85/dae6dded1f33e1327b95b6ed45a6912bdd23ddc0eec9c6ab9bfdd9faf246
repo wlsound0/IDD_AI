@@ -1,0 +1,2 @@
+
+46ea4db4c61601734c66d3df587a193dfa25f59a	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/std-env","integrity":null,"time":1793892948053,"size":"262","metadata":{"time":1793892948053,"url":"https://registry.npm.taobao.org/std-env","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:48 GMT","location":"https://registry.npmmirror.com/std-env"},"options":{"compress":true},"status":301}}

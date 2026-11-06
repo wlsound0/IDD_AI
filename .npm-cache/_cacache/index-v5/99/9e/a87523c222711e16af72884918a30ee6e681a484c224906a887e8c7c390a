@@ -1,0 +1,2 @@
+
+0a34a2e2ad2f09180b5afa0d51c6366629ebc5de	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/@esbuild%2fsunos-x64","integrity":null,"time":1793892949488,"size":"262","metadata":{"time":1793892949488,"url":"https://registry.npm.taobao.org/@esbuild%2fsunos-x64","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:49 GMT","location":"https://registry.npmmirror.com/@esbuild%2fsunos-x64"},"options":{"compress":true},"status":301}}

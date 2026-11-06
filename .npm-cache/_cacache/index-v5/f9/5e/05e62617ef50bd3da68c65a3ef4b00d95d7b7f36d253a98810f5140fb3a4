@@ -1,0 +1,2 @@
+
+11ce1b7307753a03c1538d386f6bc4eb041e885c	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/puppeteer-core","integrity":null,"time":1793892947393,"size":"262","metadata":{"time":1793892947393,"url":"https://registry.npm.taobao.org/puppeteer-core","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:47 GMT","location":"https://registry.npmmirror.com/puppeteer-core"},"options":{"compress":true},"status":301}}

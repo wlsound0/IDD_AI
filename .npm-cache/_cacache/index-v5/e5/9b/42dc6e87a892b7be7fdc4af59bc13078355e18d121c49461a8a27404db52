@@ -1,0 +1,2 @@
+
+acc9a75335cc8f2cdc2575e0f0a801d257e241a0	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/get-func-name","integrity":null,"time":1793892950470,"size":"262","metadata":{"time":1793892950470,"url":"https://registry.npm.taobao.org/get-func-name","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:50 GMT","location":"https://registry.npmmirror.com/get-func-name"},"options":{"compress":true},"status":301}}

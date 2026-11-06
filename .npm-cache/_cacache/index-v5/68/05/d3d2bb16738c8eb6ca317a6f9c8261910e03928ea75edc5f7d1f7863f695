@@ -1,0 +1,2 @@
+
+a23f90193abfcf0d12f7de7090cab16d18722bdb	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/diff-sequences","integrity":null,"time":1793892950466,"size":"262","metadata":{"time":1793892950466,"url":"https://registry.npm.taobao.org/diff-sequences","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:50 GMT","location":"https://registry.npmmirror.com/diff-sequences"},"options":{"compress":true},"status":301}}

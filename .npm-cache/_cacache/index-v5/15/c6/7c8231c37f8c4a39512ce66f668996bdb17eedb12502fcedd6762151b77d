@@ -1,0 +1,2 @@
+
+dd125c6aecae86511fbea749a1f393242d8a498a	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/happy-dom","integrity":null,"time":1793892947597,"size":"262","metadata":{"time":1793892947597,"url":"https://registry.npm.taobao.org/happy-dom","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:47 GMT","location":"https://registry.npmmirror.com/happy-dom"},"options":{"compress":true},"status":301}}

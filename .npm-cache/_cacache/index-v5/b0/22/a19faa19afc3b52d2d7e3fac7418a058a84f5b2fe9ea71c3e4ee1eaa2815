@@ -1,0 +1,2 @@
+
+05fcafe87f28fada494c7dd8008d73891b81d1ba	{"key":"make-fetch-happen:request-cache:https://registry.npm.taobao.org/@napi-rs%2fcanvas","integrity":null,"time":1793892947805,"size":"262","metadata":{"time":1793892947805,"url":"https://registry.npm.taobao.org/@napi-rs%2fcanvas","reqHeaders":{"accept":"application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*"},"resHeaders":{"content-type":"text/html","date":"Thu, 05 Nov 2026 15:35:47 GMT","location":"https://registry.npmmirror.com/@napi-rs%2fcanvas"},"options":{"compress":true},"status":301}}
