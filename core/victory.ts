@@ -76,8 +76,9 @@ export function checkVictory(state: VictoryState): VictoryResult {
   }
 
   // 4. 双方都能进攻但都不动手：四小回合后，最后进攻方获胜。
+  //    从未有人进攻时 lastAggressor 为空 —— 用户裁决（P5 登记）：判后手胜。
   if (!firstCannot && !secondCannot && state.smallTurnsWithoutAttack >= STALEMATE_SMALL_TURNS) {
-    return { winner: lastAggressor, reason: 'stalemate-both-can-attack' };
+    return { winner: lastAggressor ?? 'second', reason: 'stalemate-both-can-attack' };
   }
 
   return { winner: null, reason: null };

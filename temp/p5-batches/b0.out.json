@@ -1,0 +1,396 @@
+{
+  "batch": 0,
+  "items": [
+    {
+      "id": "wangyouzhixiang",
+      "name": "忘忧之香",
+      "cost": 1000,
+      "impl": "partial",
+      "trigger": "manual",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "custom",
+          "key": "snapshotHp",
+          "note": "记录当前血量，己方回合内可回到记录值（不是治疗，可回血也可降血）"
+        },
+        {
+          "op": "tempHp",
+          "ref": "target",
+          "amount": 1
+        }
+      ],
+      "notes": "血量未变才得1临时血；记录到下个友方回合结束后失效",
+      "rulings": []
+    },
+    {
+      "id": "huwan",
+      "name": "护腕",
+      "cost": 1000,
+      "impl": "partial",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "custom",
+          "key": "modalChoice",
+          "note": "抉择二选一：A 攻击力+1 至友方回合结束；B 1 点临时血量 至下个友方回合开始"
+        }
+      ],
+      "notes": "两分支时限不同，引擎需支持使用时的二选一",
+      "rulings": []
+    },
+    {
+      "id": "huaibiao",
+      "name": "怀表",
+      "cost": 2000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "damageReduce",
+          "ref": "target",
+          "amount": 1,
+          "vs": "attack"
+        }
+      ],
+      "notes": "只减攻击伤害，技能/道具伤害不减",
+      "rulings": []
+    },
+    {
+      "id": "jixiewanou",
+      "name": "机械玩偶",
+      "cost": 2000,
+      "impl": "partial",
+      "trigger": "manual",
+      "target": {
+        "mode": "none"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "summon",
+          "ref": "owner",
+          "unit": {
+            "name": "机械娃娃",
+            "atk": 1,
+            "hp": 1
+          },
+          "tags": [
+            "summon"
+          ]
+        },
+        {
+          "op": "custom",
+          "key": "summonRestrictions",
+          "note": "不可被救援；己方场上只能有一个同名召唤物；上场当回合无法攻击"
+        }
+      ],
+      "notes": "召唤物占一个战场位、可被攻击；不可救援/唯一/首回合禁攻无表内 op",
+      "rulings": [
+        "Q24",
+        "Q27"
+      ]
+    },
+    {
+      "id": "ranshaodan",
+      "name": "燃烧弹",
+      "cost": 1000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "sealSkills",
+          "ref": "target"
+        }
+      ],
+      "notes": "",
+      "rulings": []
+    },
+    {
+      "id": "lengquedan",
+      "name": "冷却弹",
+      "cost": 1000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "none"
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "itemDiscount",
+          "ref": "allEnemies",
+          "item": "*",
+          "amount": -2000,
+          "scope": "once"
+        }
+      ],
+      "notes": "原文「+2」按Q21折2k；只对对方下一次道具生效",
+      "rulings": [
+        "Q21"
+      ]
+    },
+    {
+      "id": "niantudan",
+      "name": "粘土弹",
+      "cost": 1000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "target",
+          "stat": "atk",
+          "delta": -1
+        }
+      ],
+      "notes": "",
+      "rulings": []
+    },
+    {
+      "id": "ganlanqiu",
+      "name": "橄榄球",
+      "cost": 2000,
+      "impl": "partial",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "instant",
+      "ops": [
+        {
+          "op": "damage",
+          "ref": "target",
+          "amount": 1,
+          "kind": "skill"
+        },
+        {
+          "op": "custom",
+          "key": "extraBallScaling",
+          "note": "可反复额外消耗1个橄榄球+1k，使本次伤害再+1，次数无上限"
+        }
+      ],
+      "notes": "加伤是使用前的额外付费叠加，原文明示无上限",
+      "rulings": []
+    },
+    {
+      "id": "shoudiantong",
+      "name": "手电筒",
+      "cost": 2000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "untilBigRoundEnd",
+      "ops": [
+        {
+          "op": "sealSkills",
+          "ref": "target"
+        }
+      ],
+      "notes": "「一回合」按Q22默认大回合",
+      "rulings": [
+        "Q22"
+      ]
+    },
+    {
+      "id": "banche",
+      "name": "板车",
+      "cost": 1000,
+      "impl": "partial",
+      "trigger": "manual",
+      "target": {
+        "mode": "none"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "summon",
+          "ref": "owner",
+          "unit": {
+            "name": "板车",
+            "atk": 0,
+            "hp": 2
+          },
+          "tags": [
+            "summon"
+          ]
+        },
+        {
+          "op": "custom",
+          "key": "summonAbility",
+          "note": "板车自带主动：使一角色无敌一回合，期间封其技能且不可攻击；上场首回合不可用，CD1；不视为角色"
+        }
+      ],
+      "notes": "「弹射」原文未定义；召唤物技能需单独建模",
+      "rulings": [
+        "Q24"
+      ]
+    },
+    {
+      "id": "moshubang",
+      "name": "魔术棒",
+      "cost": 1000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "instant",
+      "ops": [
+        {
+          "op": "interruptDamage",
+          "ref": "victim",
+          "factor": 0.5
+        },
+        {
+          "op": "itemDiscount",
+          "ref": "self",
+          "item": "moshubang",
+          "amount": 1000,
+          "scope": "once"
+        }
+      ],
+      "notes": "反应式道具（P7-2 X5）：攻击宣告后打开打断窗口，受击方使用后本次伤害减半（向下取整）；下次魔术棒 +1k（仅一次，用后清除、不累积）",
+      "rulings": [
+        "Q21"
+      ],
+      "reaction": "beforeAttack"
+    },
+    {
+      "id": "huazuo",
+      "name": "画作（某角色）",
+      "cost": 2000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "turns:1",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "target",
+          "key": "cannotAttack"
+        }
+      ],
+      "notes": "只能用于与本画作同名（获取时绑定）的 1 个角色，使其下回合无法攻击；目标校验由 useItem 按 nameKey 执行",
+      "rulings": []
+    },
+    {
+      "id": "bayinhe",
+      "name": "八音盒",
+      "cost": 1000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "permanent",
+      "ops": [],
+      "notes": "抉择二选一：目标攻击力+1（其被攻击后清除）或攻击力-1（其攻击后清除）；状态来源带 bayinheBuffPersist（舞女二重奏）时清除被跳过",
+      "rulings": [],
+      "branches": [
+        {
+          "label": "攻击力+1（被攻击后消失）",
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "target",
+              "stat": "atk",
+              "delta": 1,
+              "consumedOn": "attacked"
+            }
+          ]
+        },
+        {
+          "label": "攻击力-1（攻击后消失）",
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "target",
+              "stat": "atk",
+              "delta": -1,
+              "consumedOn": "attack"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zhenjingji",
+      "name": "镇静剂",
+      "cost": 1000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "instant",
+      "ops": [
+        {
+          "op": "heal",
+          "ref": "target",
+          "amount": 1
+        }
+      ],
+      "notes": "",
+      "rulings": []
+    },
+    {
+      "id": "xinhaoqiang",
+      "name": "信号枪",
+      "cost": 3000,
+      "impl": "full",
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "duration": "turns:1",
+      "ops": [
+        {
+          "op": "damage",
+          "ref": "target",
+          "amount": 2,
+          "kind": "skill"
+        },
+        {
+          "op": "flag",
+          "ref": "target",
+          "key": "cannotAttack"
+        },
+        {
+          "op": "itemDiscount",
+          "ref": "self",
+          "item": "xinhaoqiang",
+          "amount": -1000,
+          "scope": "once"
+        }
+      ],
+      "notes": "「下一个回合」按目标的下一个回合；下次信号枪花费+1k",
+      "rulings": [
+        "Q21"
+      ]
+    }
+  ]
+}

@@ -11,3 +11,5 @@ import './game.test.mjs';
 import './dying.test.mjs';
 import './match.test.mjs';
 import './bp.test.mjs';
+import './effects.test.mjs';
+import './qa.test.mjs';

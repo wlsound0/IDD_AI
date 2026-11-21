@@ -1,0 +1,245 @@
+{
+  "batch": 3,
+  "characters": [
+    {
+      "id": "binghuan",
+      "name": "病患",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "binghuan/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "binghuan/钩爪逃生",
+          "name": "钩爪逃生",
+          "type": "cooldown",
+          "text": "钩爪逃生（CD：0，限三次）：获得一点临时血量，持续到下个友方回合开始。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "binghuan/牵绊",
+          "name": "牵绊",
+          "type": "battlecry",
+          "text": "牵绊：战吼：若心理学家在场上，血量+1。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "rulianshi",
+      "name": "入殓师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "rulianshi/入殓",
+          "name": "入殓",
+          "type": "charge",
+          "text": "入殓（每回合充能：1/1）：给一个友方单位获得附容返生效果（友方场上最多有一个拥有附容返生效果的角色），可随时在友方回合无限次转移该效果。战吼：自己获得附容返生效果。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "rulianshi/附容返生",
+          "name": "附容返生",
+          "type": "passive",
+          "text": "附容返生：可被入殓师救援，且入殓师不会扣血。成功救援后，被救援角色获得一个可以抵挡一次伤害的护盾，且受到的所有致命伤害延迟触发，持续至下个友方回合结束。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "tiaojiushi",
+      "name": "调酒师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 4,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "tiaojiushi/多夫林底酒",
+          "name": "多夫林底酒",
+          "type": "passive",
+          "text": "多夫林底酒（限一次）：受到伤害后，获得无敌，持续到下个友方回合开始。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "tiaojiushi/烈性多夫林",
+          "name": "烈性多夫林",
+          "type": "active",
+          "text": "烈性多夫林（限两次）：给受伤的友方角色使用，使其回复至满血。然后攻击力减一，持续到下个友方回合开始。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "yeren",
+      "name": "野人",
+      "rarity": "epic",
+      "atk": 0,
+      "hp": 4,
+      "cost": 5000,
+      "skills": [
+        {
+          "id": "yeren/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援，救援只扣一血，但必扣本体；“野人”不会因封技能而无法救援，但被封技能后救援扣两血，且优先扣除临时血量。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yeren/野性伙伴",
+          "name": "野性伙伴",
+          "type": "cooldown",
+          "text": "野性伙伴（CD：1）：增加两点临时血量，第一次使用时持续两回合，之后持续一回合。期间野人攻击力+1且攻击时不受到反伤，临时血量扣完时技能自动结束。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "jisi",
+      "name": "祭司",
+      "rarity": "limited",
+      "atk": 2,
+      "hp": 3,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "jisi/门之钥",
+          "name": "门之钥",
+          "type": "charge",
+          "text": "门之钥（每回合充能一次：2/3）：交换一个角色的血量和攻击力（临时增加的血量和攻击力不进行交换，且无法交换攻击力为0的角色）。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jisi/羸弱",
+          "name": "羸弱",
+          "type": "passive",
+          "text": "羸弱：反伤造成的伤害-1。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jisi/超长通道",
+          "name": "超长通道",
+          "type": "active",
+          "text": "超长通道（限一次）：使一个角色和自己回复1点血量。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "qianfeng",
+      "name": "前锋",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 4,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "qianfeng/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援，且救援只扣一血。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "qianfeng/机械盲",
+          "name": "机械盲",
+          "type": "passive",
+          "text": "机械盲：无法主动攻击。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "qianfeng/运动天赋",
+          "name": "运动天赋",
+          "type": "passive",
+          "text": "运动天赋：无法成为敌方技能和道具的使用对象。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "qianfeng/橄榄球员",
+          "name": "橄榄球员",
+          "type": "battlecry",
+          "text": "橄榄球员：战吼：获得三个“橄榄球”。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "cishanjia",
+      "name": "慈善家",
+      "rarity": "epic",
+      "atk": 0,
+      "hp": 1,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "cishanjia/狡猾",
+          "name": "狡猾",
+          "type": "battlecry",
+          "text": "狡猾：战吼：获得两个“手电筒”。“慈善家”攻击的角色下回合无法攻击。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "gudongshang",
+      "name": "古董商",
+      "rarity": "limited",
+      "atk": 2,
+      "hp": 4,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "gudongshang/旧伤",
+          "name": "旧伤",
+          "type": "passive",
+          "text": "旧伤：无法攻击血量为1的角色；被血量为1的角色攻击时，不会造成反伤。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "gudongshang/藏锋",
+          "name": "藏锋",
+          "type": "active",
+          "text": "藏锋（耐久度：5）：转式（消耗耐久度：1）：血量+1。扫式（CD：0，消耗耐久度：3）：使下次攻击造成的伤害加1，不受到反伤，且同时对其相邻的两个角色造成1点伤害，并使被攻击的角色攻击力-1，持续一回合。",
+          "durability": 5,
+          "cost": null
+        },
+        {
+          "id": "gudongshang/身轻如燕",
+          "name": "身轻如燕",
+          "type": "passive",
+          "text": "身轻如燕：不会被封技能，不会获得不可攻击效果。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    }
+  ]
+}

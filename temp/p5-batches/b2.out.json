@@ -1,0 +1,616 @@
+{
+  "batch": 2,
+  "skills": [
+    {
+      "id": "laladuiyuan/鼓舞",
+      "character": "拉拉队员",
+      "name": "鼓舞",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "untilOwnTurnEnd",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 2
+        },
+        {
+          "op": "extraAttack",
+          "ref": "self",
+          "count": 1
+        },
+        {
+          "op": "defer",
+          "ref": "self",
+          "delay": "nextOwnTurnStart",
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "self",
+              "stat": "atk",
+              "delta": -1,
+              "duration": "turns:1"
+            }
+          ]
+        }
+      ],
+      "notes": "攻击 +2 且可再次攻击；下个己方回合开始攻击 -1，持续一回合"
+    },
+    {
+      "id": "laladuiyuan/振奋",
+      "character": "拉拉队员",
+      "name": "振奋",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "ops": [
+        {
+          "op": "cdDelta",
+          "ref": "target",
+          "delta": -1,
+          "selfReady": true
+        }
+      ],
+      "notes": "目标为他人时其技能 CD-1；目标为自己时自身所有 CD 技能立即就绪，且振奋自身进入 CD（P7-E1 裁决）"
+    },
+    {
+      "id": "laladuiyuan/激励",
+      "character": "拉拉队员",
+      "name": "激励",
+      "type": "charge",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter",
+        "filter": {
+          "excludeSelf": true
+        }
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [],
+      "notes": "雀跃消耗 1 充能：攻击 +1，下个己方回合开始 -1 持续一回合；亢奋消耗 3 充能：回复 2 血",
+      "branches": [
+        {
+          "label": "雀跃",
+          "cost": 1,
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "target",
+              "stat": "atk",
+              "delta": 1
+            },
+            {
+              "op": "defer",
+              "ref": "self",
+              "delay": "nextOwnTurnStart",
+              "ops": [
+                {
+                  "op": "modStat",
+                  "ref": "target",
+                  "stat": "atk",
+                  "delta": -1,
+                  "duration": "turns:1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "亢奋",
+          "cost": 3,
+          "ops": [
+            {
+              "op": "heal",
+              "ref": "target",
+              "amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kongjun/救援",
+      "character": "空军",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "grantRescue",
+          "ref": "self"
+        }
+      ],
+      "notes": "具备救援能力"
+    },
+    {
+      "id": "kongjun/精准打击",
+      "character": "空军",
+      "name": "精准打击",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "itemUse",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": -1,
+          "duration": "permanent"
+        },
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "hp",
+          "delta": 1,
+          "duration": "permanent"
+        },
+        {
+          "op": "sealSkills",
+          "ref": "target",
+          "duration": "turns:1"
+        }
+      ],
+      "notes": "战吼获得一把信号枪；使用信号枪后空军攻击力-1、血量+1，并额外封禁该次信号枪目标的技能（turns:1）",
+      "condition": [
+        {
+          "itemUsed": "xinhaoqiang"
+        }
+      ],
+      "battlecryOps": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "xinhaoqiang",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "jiqiushou/救援",
+      "character": "击球手",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "grantRescue",
+          "ref": "self"
+        }
+      ],
+      "notes": "具备救援能力"
+    },
+    {
+      "id": "jiqiushou/使命感",
+      "character": "击球手",
+      "name": "使命感",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "allyDeath",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 2,
+          "duration": "turns:2"
+        }
+      ],
+      "notes": "原文「下个友方回合结束」，DSL 无对应值，按 turns:2"
+    },
+    {
+      "id": "jiqiushou/爆发",
+      "character": "击球手",
+      "name": "爆发",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "untilOwnTurnEnd",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 1
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "atkDownOnHit",
+          "value": 1,
+          "duration": "untilOwnTurnEnd"
+        },
+        {
+          "op": "atkPenaltyOnCd",
+          "skill": "爆发",
+          "amount": 1
+        }
+      ],
+      "notes": "本回合攻击 +1；攻击命中后被攻击者攻击 -1 持续一回合；本技能处于 CD 时自身攻击 -1"
+    },
+    {
+      "id": "mangnv/回声定位",
+      "character": "盲女",
+      "name": "回声定位",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "beforeDamage",
+      "target": {
+        "mode": "self"
+      },
+      "usageLimit": {
+        "perGame": 1
+      },
+      "duration": "instant",
+      "ops": [
+        {
+          "op": "immune",
+          "ref": "self",
+          "scope": "all",
+          "uses": 1
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noReflect"
+        }
+      ],
+      "notes": "限一次，免疫本次伤害且不反伤"
+    },
+    {
+      "id": "mangnv/羸弱",
+      "character": "盲女",
+      "name": "羸弱",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "reflectMod",
+          "ref": "self",
+          "delta": -1
+        }
+      ],
+      "notes": "自身反伤伤害 -1"
+    },
+    {
+      "id": "qiutu/强电流",
+      "character": "囚徒",
+      "name": "强电流",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [
+        {
+          "op": "damage",
+          "ref": "target",
+          "amount": 1,
+          "kind": "skill"
+        }
+      ],
+      "notes": "目标为场上任意角色"
+    },
+    {
+      "id": "qiutu/线路控制",
+      "character": "囚徒",
+      "name": "线路控制",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "allyUnit"
+      },
+      "usageLimit": {
+        "perTurn": 1
+      },
+      "ops": [],
+      "notes": "基础：自身攻击-1、友方攻击+1；升级：花费1k改为自身-3、友方+2（每局限一次）。攻击力变化按 P7-D3 裁决默认永久",
+      "branches": [
+        {
+          "label": "基础",
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "self",
+              "stat": "atk",
+              "delta": -1
+            },
+            {
+              "op": "modStat",
+              "ref": "target",
+              "stat": "atk",
+              "delta": 1
+            }
+          ]
+        },
+        {
+          "label": "升级",
+          "kCost": 1000,
+          "uses": 1,
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "self",
+              "stat": "atk",
+              "delta": -3
+            },
+            {
+              "op": "modStat",
+              "ref": "target",
+              "stat": "atk",
+              "delta": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qiutu/过度专注",
+      "character": "囚徒",
+      "name": "过度专注",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "damageMultiplier",
+          "ref": "self",
+          "factor": 0.5
+        }
+      ],
+      "notes": "攻击与反伤伤害减半，向下取整"
+    },
+    {
+      "id": "lvshi/庄园老友",
+      "character": "律师",
+      "name": "庄园老友",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "veteranOfManor"
+        }
+      ],
+      "notes": "关键词「庄园老友」：本大回合已受伤后，后续受到的攻击伤害-1（不叠加）"
+    },
+    {
+      "id": "lvshi/要点记录",
+      "character": "律师",
+      "name": "要点记录",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "turnEnd",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 1
+        },
+        {
+          "op": "heal",
+          "ref": "self",
+          "amount": 1
+        }
+      ],
+      "notes": "「血量+1」为加血，按 D05 可抬高上限"
+    },
+    {
+      "id": "maoxianjia/探险幻想",
+      "character": "冒险家",
+      "name": "探险幻想",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "turnEnd",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 2
+        }
+      ],
+      "notes": "回合结束时攻击力+2；攻击后攻击力改为2（setStat 覆盖此前加攻，之后的 +2 仍可叠加）",
+      "afterAttackOps": [
+        {
+          "op": "setStat",
+          "ref": "self",
+          "stat": "atk",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "maoxianjia/密码书页",
+      "character": "冒险家",
+      "name": "密码书页",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "selfDeath",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "ops": [
+        {
+          "op": "copyAtk",
+          "from": "self",
+          "to": "target",
+          "duration": "turns:2"
+        }
+      ],
+      "notes": "原文「下个友方回合结束」，DSL 无对应值，按 turns:2"
+    },
+    {
+      "id": "maoxianjia/格列佛游记",
+      "character": "冒险家",
+      "name": "格列佛游记",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "invulnerable",
+          "ref": "self"
+        }
+      ],
+      "notes": "己方存活≥2（自己+至少一名队友）时获得「不可被攻击」，队友全灭后失效",
+      "condition": [
+        {
+          "allyAlive": 2
+        }
+      ]
+    },
+    {
+      "id": "xinlixuejia/应激",
+      "character": "心理学家",
+      "name": "应激",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "damaged",
+      "target": {
+        "mode": "self"
+      },
+      "usageLimit": {
+        "perGame": 2
+      },
+      "ops": [
+        {
+          "op": "heal",
+          "ref": "self",
+          "amount": 2
+        }
+      ],
+      "notes": "攻击力上限 1（常驻 atkCap）；血量 <4 时受击后回 2 血，每局限 2 次（P7-C1 默认裁决）",
+      "condition": [
+        {
+          "hpLt": 4
+        }
+      ],
+      "battlecryOps": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "atkCap",
+          "value": 1,
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "xinlixuejia/移情",
+      "character": "心理学家",
+      "name": "移情",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "ops": [
+        {
+          "op": "heal",
+          "ref": "target",
+          "amount": 2
+        },
+        {
+          "op": "damage",
+          "ref": "self",
+          "amount": 2,
+          "kind": "effect"
+        }
+      ],
+      "notes": "回血 2，自身支付 2 点"
+    },
+    {
+      "id": "xinlixuejia/牵绊",
+      "character": "心理学家",
+      "name": "牵绊",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "grantRescue",
+          "ref": "self"
+        },
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "targetName": "病患"
+        }
+      ],
+      "notes": "具备救援能力，但只能救援角色名「病患」的目标；扣血与普通救援相同（2 点）"
+    }
+  ]
+}

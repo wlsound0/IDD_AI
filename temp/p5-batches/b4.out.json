@@ -1,0 +1,563 @@
+{
+  "batch": 4,
+  "skills": [
+    {
+      "id": "zhoushushi/猿猴咒像",
+      "character": "咒术师",
+      "name": "猿猴咒像",
+      "type": "charge",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "ops": [],
+      "notes": "咒像守护耗充能 1 造成 1 点伤害；咒像引爆耗充能 3 造成 2 点伤害，并使目标直到其下个己方回合结束不可攻击（见 temp/decisions.md P7-E2-1）",
+      "rulings": [
+        "Q25"
+      ],
+      "branches": [
+        {
+          "label": "咒像守护",
+          "cost": 1,
+          "ops": [
+            {
+              "op": "damage",
+              "ref": "target",
+              "amount": 1,
+              "kind": "skill"
+            }
+          ]
+        },
+        {
+          "label": "咒像引爆",
+          "cost": 3,
+          "ops": [
+            {
+              "op": "damage",
+              "ref": "target",
+              "amount": 2,
+              "kind": "skill"
+            },
+            {
+              "op": "restrictAttack",
+              "ref": "target",
+              "duration": "untilNextOwnTurnEnd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wanjushang/安抚物",
+      "character": "玩具商",
+      "name": "安抚物",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [],
+      "notes": "四选一：获得对应道具且该道具花费 -1，每局限一次。钢铁护肘映射到道具表「护腕」huwan（见 temp/decisions.md P7-E2-4）；「任意阶段」含对方回合，不再限制本方行动回合",
+      "branches": [
+        {
+          "label": "镇静剂",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "zhenjingji",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "zhenjingji",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "魔术棒",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "moshubang",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "moshubang",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "忘忧之香",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "wangyouzhixiang",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "wangyouzhixiang",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "钢铁护肘",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "huwan",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "huwan",
+              "amount": -1
+            }
+          ]
+        }
+      ],
+      "anyPhase": true
+    },
+    {
+      "id": "wanjushang/玩具匣",
+      "character": "玩具商",
+      "name": "玩具匣",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "usageLimit": {
+        "perTurn": 3
+      },
+      "ops": [
+        {
+          "op": "itemDiscount",
+          "ref": "allAllies",
+          "item": "$chosen",
+          "amount": -1000,
+          "duration": "permanent"
+        },
+        {
+          "op": "itemLock",
+          "ref": "allAllies",
+          "item": "$chosen",
+          "duration": "turns:1"
+        }
+      ],
+      "notes": "指定玩家持有的一种道具：该道具本大回合不可使用（临时，到大回合末）；其花费永久 -1k。作用于己方全体（道具属于玩家，不属于某个角色）",
+      "target": {
+        "mode": "none"
+      }
+    },
+    {
+      "id": "wanjushang/弹射板车",
+      "character": "玩具商",
+      "name": "弹射板车",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "banche",
+          "count": 2
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noSkillSeal"
+        }
+      ],
+      "notes": "「不被封技能」仅限使用板车时"
+    },
+    {
+      "id": "kantanyuan/陨石磁铁",
+      "character": "勘探员",
+      "name": "陨石磁铁",
+      "type": "charge",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "ops": [],
+      "notes": "两抉择已拆分支并在己方回合结束结算；攻击 -1 按 P7-2-X2 裁决为永久",
+      "rulings": [
+        "Q25"
+      ],
+      "branches": [
+        {
+          "label": "降低攻击",
+          "ops": [
+            {
+              "op": "defer",
+              "ref": "self",
+              "delay": "ownTurnEnd",
+              "ops": [
+                {
+                  "op": "modStat",
+                  "ref": "target",
+                  "stat": "atk",
+                  "delta": -1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "下回合无法攻击",
+          "ops": [
+            {
+              "op": "defer",
+              "ref": "self",
+              "when": "ownTurnEnd",
+              "ops": [
+                {
+                  "op": "flag",
+                  "ref": "target",
+                  "key": "cannotAttack",
+                  "duration": "untilNextOwnTurnEnd"
+                },
+                {
+                  "op": "damage",
+                  "ref": "self",
+                  "amount": 1,
+                  "kind": "skill"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "moshushi/魔术演绎",
+      "character": "魔术师",
+      "name": "魔术演绎",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "itemUse",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "wandCap1",
+          "value": 1
+        }
+      ],
+      "notes": "战吼获得三个魔术棒；魔术师使用魔术棒后，下一次受到的伤害至多 1 点（伤害结算后消耗该 flag，P7-E3 默认裁决）",
+      "condition": [
+        {
+          "itemUsed": "moshubang"
+        }
+      ],
+      "battlecryOps": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "moshubang",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "huajia/感性直观",
+      "character": "画家",
+      "name": "感性直观",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "rescueLimit",
+          "value": 2
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "rescueCostDelta",
+          "value": -1
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noMaxHpHalve"
+        },
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 1
+        }
+      ],
+      "notes": "可被救 2 次；救援者扣血 2-1=1（Q32）",
+      "rulings": [
+        "Q32"
+      ]
+    },
+    {
+      "id": "huajia/艺术敏感",
+      "character": "画家",
+      "name": "艺术敏感",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "afterAttack",
+      "usageLimit": {
+        "perGame": 2
+      },
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "huazuo",
+          "count": 1,
+          "nameFrom": "victim"
+        }
+      ],
+      "notes": "攻击后获得被攻击者的画作；画作实例绑定被攻击者的角色名（每局限两次）"
+    },
+    {
+      "id": "xiaonvhai/记忆同步",
+      "character": "小女孩",
+      "name": "记忆同步",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "ops": [
+        {
+          "op": "possession",
+          "ref": "target",
+          "scope": "all"
+        },
+        {
+          "op": "tempHp",
+          "ref": "target",
+          "amount": 1
+        }
+      ],
+      "notes": "附身目标：给予 1 点临时血量；附身期间自身免疫（无数量上限）且目标不可攻击；目标临时血扣完时自动结束并移除免疫（P7-E4 裁决）"
+    },
+    {
+      "id": "xiaonvhai/回忆碎片",
+      "character": "小女孩",
+      "name": "回忆碎片",
+      "type": "charge",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "duration": "turns:1",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "target",
+          "stat": "atk",
+          "delta": -1
+        }
+      ],
+      "notes": "仅记忆同步期间可用；充能上限3、每回合+1",
+      "rulings": [
+        "Q25"
+      ]
+    },
+    {
+      "id": "xiaoshuojia/隐喻",
+      "character": "小说家",
+      "name": "隐喻",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "duration": "untilOwnTurnEnd",
+      "ops": [
+        {
+          "op": "swapPosition",
+          "refA": "self",
+          "refB": "target"
+        },
+        {
+          "op": "defer",
+          "ref": "self",
+          "delay": "ownTurnEnd",
+          "ops": [
+            {
+              "op": "swapBack",
+              "refA": "self",
+              "refB": "target"
+            }
+          ]
+        }
+      ],
+      "notes": "与任意角色（含敌方）换位，己方回合结束换回；一方死亡时活着的一方回原位；被互换的另一方换回时血<3则+1（P7-D4 默认裁决）"
+    },
+    {
+      "id": "youcha/邮件",
+      "character": "邮差",
+      "name": "邮件",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter",
+        "optional": true
+      },
+      "duration": "whileSourceAlive",
+      "ops": [],
+      "notes": "六种信件择一，邮差与收信者同享；目标可空则只对邮差生效（Q40）；激励=本回合可再次攻击但有效攻击力上限 1（Q41）",
+      "rulings": [
+        "Q40"
+      ],
+      "branches": [
+        {
+          "label": "急切",
+          "ops": [
+            {
+              "op": "tempHp",
+              "ref": "selfAndTarget",
+              "amount": 1,
+              "duration": "turns:2"
+            }
+          ]
+        },
+        {
+          "label": "诀别",
+          "ops": [
+            {
+              "op": "flag",
+              "ref": "selfAndTarget",
+              "key": "letterFarewell",
+              "duration": "turns:1"
+            }
+          ]
+        },
+        {
+          "label": "冷静",
+          "if": "notFirstBigTurn",
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "selfAndTarget",
+              "stat": "atk",
+              "delta": 1,
+              "duration": "turns:1"
+            }
+          ]
+        },
+        {
+          "label": "勇敢",
+          "ops": [
+            {
+              "op": "rescueRule",
+              "ref": "selfAndTarget",
+              "value": 1,
+              "duration": "turns:2"
+            }
+          ]
+        },
+        {
+          "label": "激励",
+          "ops": [
+            {
+              "op": "extraAttack",
+              "ref": "selfAndTarget",
+              "count": 1,
+              "duration": "untilOwnTurnEnd"
+            },
+            {
+              "op": "flag",
+              "ref": "selfAndTarget",
+              "key": "atkCap",
+              "value": 1,
+              "duration": "untilOwnTurnEnd"
+            }
+          ]
+        },
+        {
+          "label": "希望",
+          "ops": [
+            {
+              "op": "heal",
+              "ref": "selfAndTarget",
+              "amountExpr": {
+                "base": 5,
+                "minus": "alliesAlive"
+              },
+              "healMode": "add"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "youcha/送信犬",
+      "character": "邮差",
+      "name": "送信犬",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "target",
+          "stat": "atk",
+          "delta": -1
+        }
+      ],
+      "notes": "攻击-1的持续时长原文未写"
+    },
+    {
+      "id": "youcha/期待",
+      "character": "邮差",
+      "name": "期待",
+      "type": "passive",
+      "impl": "none",
+      "manual": false,
+      "trigger": "always",
+      "ops": [],
+      "notes": "仅风味句；效果并入「邮件」的可空目标（Q40）",
+      "rulings": [
+        "Q40"
+      ]
+    }
+  ]
+}

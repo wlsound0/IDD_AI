@@ -1,0 +1,506 @@
+{
+  "batch": 5,
+  "skills": [
+    {
+      "id": "feixingjia/救援",
+      "character": "飞行家",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "rescue",
+      "ops": [
+        {
+          "op": "grantRescue",
+          "ref": "self"
+        },
+        {
+          "op": "grantRescueFlyer",
+          "ref": "self"
+        }
+      ],
+      "notes": "具备救援能力；救援时可消耗一个飞行器使本次救援无伤（rescue 动作的 useFlyer）"
+    },
+    {
+      "id": "feixingjia/飞行器",
+      "character": "飞行家",
+      "name": "飞行器",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "ownTurnEnd",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "triggerFlyer",
+          "ref": "self"
+        }
+      ],
+      "notes": "己方回合结束自动触发：耐久 >0 时消耗 1 耐久，血量 +1、上限 +1 并计入初始上限；耐久 0 不触发"
+    },
+    {
+      "id": "feixingjia/悬停",
+      "character": "飞行家",
+      "name": "悬停",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "beforeDamage",
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [
+        {
+          "op": "immune",
+          "ref": "self",
+          "scope": "all",
+          "uses": 1
+        },
+        {
+          "op": "triggerFlyer",
+          "ref": "self"
+        }
+      ],
+      "notes": "每局首次伤害免疫（攻击与技能伤害都挡，scope=all）；飞行器耐久 >0 时立即触发一次（消耗 1 耐久、回 1 血、上限 +1），耐久 0 时仅免伤"
+    },
+    {
+      "id": "feixingjia/特发性震颤",
+      "character": "飞行家",
+      "name": "特发性震颤",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": -1
+        },
+        {
+          "op": "selfRescue",
+          "ref": "self"
+        }
+      ],
+      "notes": "己方只有自己可救援时攻击力-1并获得自我救援；出现第二个可救援角色后自动撤销",
+      "condition": [
+        {
+          "selfUniqueRescuer": true
+        }
+      ]
+    },
+    {
+      "id": "muoushi/救援",
+      "character": "木偶师",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "grantRescue",
+          "ref": "self"
+        }
+      ],
+      "notes": "具备救援能力"
+    },
+    {
+      "id": "muoushi/“路易”",
+      "character": "木偶师",
+      "name": "“路易”",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "beforeDamage",
+      "duration": "untilTurnEnd",
+      "ops": [
+        {
+          "op": "loseHp",
+          "ref": "self",
+          "amount": 1
+        },
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 3,
+          "rescueAmount": 2
+        }
+      ],
+      "notes": "本体血量将减少时自扣 1 点本体血并获得 3 点临时血量；救援扣血前触发时改为 2 点（P7-E2 默认裁决）"
+    },
+    {
+      "id": "muoushi/血肉无用",
+      "character": "木偶师",
+      "name": "血肉无用",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noHeal"
+        }
+      ]
+    },
+    {
+      "id": "jizhe/救援",
+      "character": "记者",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "grantRescue",
+          "ref": "self"
+        }
+      ],
+      "notes": "具备救援能力"
+    },
+    {
+      "id": "jizhe/独家新闻",
+      "character": "记者",
+      "name": "独家新闻",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "ops": [],
+      "notes": "两种幻影已可召唤（面板 0/2）；分支每局次数上限已实装（牵制 3 / 救援 1）；幻影每个大回合开始血量 -1，归零即消失（P7-2 X1「消失就是死亡」），消失会触发观测视角；主动销毁由观测视角提供",
+      "branches": [
+        {
+          "label": "牵制幻影",
+          "uses": 3,
+          "ops": [
+            {
+              "op": "summon",
+              "ref": "self",
+              "unit": {
+                "name": "牵制幻影",
+                "atk": 0,
+                "hp": 2,
+                "decay": 1
+              }
+            }
+          ]
+        },
+        {
+          "label": "救援幻影",
+          "uses": 1,
+          "ops": [
+            {
+              "op": "summon",
+              "ref": "self",
+              "unit": {
+                "name": "救援幻影",
+                "atk": 0,
+                "hp": 2,
+                "decay": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jizhe/“勇敢”",
+      "character": "记者",
+      "name": "“勇敢”",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "rescued",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noMaxHpHalve"
+        }
+      ]
+    },
+    {
+      "id": "jizhe/观测视角",
+      "character": "记者",
+      "name": "观测视角",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "summonDeath",
+      "ops": [
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 1,
+          "duration": "untilNextOwnTurnEnd"
+        },
+        {
+          "op": "grantDestroySummon",
+          "ref": "self"
+        }
+      ],
+      "notes": "幻影被攻击致死后记者获得 1 点临时血量；记者存活时可主动令自己的幻影死亡"
+    },
+    {
+      "id": "wunv/二重奏",
+      "character": "舞女",
+      "name": "二重奏",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "itemUse",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "hp",
+          "delta": 1,
+          "duration": "permanent"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "bayinheBuffPersist",
+          "duration": "permanent"
+        }
+      ],
+      "notes": "战吼获得三个八音盒；使用八音盒后舞女血量+1，并挂「八音盒增益不消失」flag（八音盒本体的抉择式增益已实装，见 P7-2 X6）",
+      "condition": [
+        {
+          "itemUsed": "bayinhe"
+        }
+      ],
+      "battlecryOps": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "bayinhe",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "wunv/杂技",
+      "character": "舞女",
+      "name": "杂技",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "duration": "untilTurnEnd",
+      "ops": [
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "yisheng/庄园老友",
+      "character": "医生",
+      "name": "庄园老友",
+      "type": "passive",
+      "impl": "none",
+      "manual": false,
+      "trigger": "always",
+      "ops": []
+    },
+    {
+      "id": "yisheng/医药专精",
+      "character": "医生",
+      "name": "医药专精",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "zhenjingji",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "yisheng/医术高超",
+      "character": "医生",
+      "name": "医术高超",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "turnEnd",
+      "duration": "instant",
+      "ops": [
+        {
+          "op": "heal",
+          "ref": "self",
+          "amount": "full"
+        }
+      ]
+    },
+    {
+      "id": "zuoqujia/组曲",
+      "character": "作曲家",
+      "name": "组曲",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "afterAttack",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 1,
+          "duration": "permanent",
+          "unless": "suppressSuiteAtk"
+        },
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 1,
+          "duration": "untilNextOwnTurnStart"
+        }
+      ],
+      "notes": "每次攻击后攻击 +1、临时血量 +1；调律期间不加攻击力"
+    },
+    {
+      "id": "zuoqujia/调律",
+      "character": "作曲家",
+      "name": "调律",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "ops": [
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 2,
+          "duration": "untilOwnTurnEnd"
+        },
+        {
+          "op": "extraAttack",
+          "ref": "self",
+          "count": 1,
+          "duration": "untilOwnTurnEnd"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "suppressSuiteAtk",
+          "duration": "untilOwnTurnEnd"
+        }
+      ],
+      "notes": "获得 2 临时血量；本回合可再次攻击但不再触发组曲加攻（剩余回合都压制）"
+    },
+    {
+      "id": "zuoqujia/静音",
+      "character": "作曲家",
+      "name": "静音",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "untargetable",
+          "ref": "self",
+          "by": "enemySkill"
+        }
+      ]
+    },
+    {
+      "id": "yuanding/庄园老友",
+      "character": "园丁",
+      "name": "庄园老友",
+      "type": "passive",
+      "impl": "none",
+      "manual": false,
+      "trigger": "always",
+      "ops": []
+    },
+    {
+      "id": "yuanding/守护",
+      "character": "园丁",
+      "name": "守护",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "shield",
+          "ref": "self",
+          "mode": "once",
+          "duration": "untilTurnEnd"
+        },
+        {
+          "op": "shield",
+          "ref": "self",
+          "mode": "once",
+          "duration": "untilTurnEnd",
+          "when": "ownTurnStart",
+          "if": "noAttackLastTurn"
+        }
+      ],
+      "notes": "战吼获得一次护盾；己方回合开始若上回合未攻击则重获，持续至回合结束"
+    },
+    {
+      "id": "yuanding/巧手匠心",
+      "character": "园丁",
+      "name": "巧手匠心",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "allyUnit"
+      },
+      "ops": [
+        {
+          "op": "transferDamage",
+          "from": "target",
+          "to": "self",
+          "ratio": 2,
+          "keepHpMin": 1
+        }
+      ],
+      "notes": "友方受致命伤害时可使其血量不低于1，溢出伤害双倍转给园丁"
+    },
+    {
+      "id": "kunchongxuezhe/昆虫研究",
+      "character": "昆虫学者",
+      "name": "昆虫研究",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "cost": {
+        "durability": 2
+      },
+      "ops": [
+        {
+          "op": "summon",
+          "ref": "self",
+          "unit": {
+            "name": "虫群",
+            "atk": 0,
+            "hp": 2,
+            "durability": 5
+          }
+        }
+      ],
+      "notes": "召唤虫群（面板 0/2，耐久 5）；受伤害时血量与耐久同时扣，任一 ≤0 即死亡；耐久 5、每次 -2"
+    }
+  ]
+}

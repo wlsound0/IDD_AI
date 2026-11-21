@@ -1,0 +1,253 @@
+{
+  "batch": 2,
+  "characters": [
+    {
+      "id": "laladuiyuan",
+      "name": "拉拉队员",
+      "rarity": "limited",
+      "atk": 1,
+      "hp": 5,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "laladuiyuan/鼓舞",
+          "name": "鼓舞",
+          "type": "cooldown",
+          "text": "鼓舞（CD：1）：拉拉队员攻击力加二，可再次攻击，持续至本次己方回合结束。下个己方回合开始时，攻击力减一，持续一回合。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "laladuiyuan/振奋",
+          "name": "振奋",
+          "type": "cooldown",
+          "text": "振奋（CD：2）：使一个技能CD-1，若为自己，则改为可立即使用技能。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "laladuiyuan/激励",
+          "name": "激励",
+          "type": "charge",
+          "text": "激励（每回合充能一次）：雀跃：花费一点充能：使一个其他角色攻击力加一，持续至下次己方回合开始。下次己方回合开始时，其攻击力减一，持续一回合。亢奋：花费三点充能：使一个其他角色回复两点血量。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "kongjun",
+      "name": "空军",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 3,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "kongjun/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "kongjun/精准打击",
+          "name": "精准打击",
+          "type": "battlecry",
+          "text": "精准打击：战吼：获得一个“信号枪”。使用获得的“信号枪”后，空军攻击力减一，血量加一，使本次“信号枪”可以封禁其技能。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "jiqiushou",
+      "name": "击球手",
+      "rarity": "normal",
+      "atk": 0,
+      "hp": 4,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "jiqiushou/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jiqiushou/使命感",
+          "name": "使命感",
+          "type": "passive",
+          "text": "使命感：己方一个角色死亡后，攻击力加2，持续到下个友方回合结束。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jiqiushou/爆发",
+          "name": "爆发",
+          "type": "cooldown",
+          "text": "爆发（CD：1）：本回合，击球手攻击力加一，且击球手攻击的角色攻击力减一，持续一回合。若本技能处于CD状态，则攻击力减一。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "mangnv",
+      "name": "盲女",
+      "rarity": "normal",
+      "atk": 4,
+      "hp": 1,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "mangnv/回声定位",
+          "name": "回声定位",
+          "type": "passive",
+          "text": "回声定位：受到伤害时，免疫本次伤害，不造成反伤，限一次。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "mangnv/羸弱",
+          "name": "羸弱",
+          "type": "passive",
+          "text": "羸弱：自身反伤造成的伤害减一。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "qiutu",
+      "name": "囚徒",
+      "rarity": "epic",
+      "atk": 3,
+      "hp": 2,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "qiutu/强电流",
+          "name": "强电流",
+          "type": "active",
+          "text": "强电流（限一次）：造成一点伤害。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "qiutu/线路控制",
+          "name": "线路控制",
+          "type": "active",
+          "text": "线路控制（每回合限一次）：自己减一攻击力，使一个友方角色加一攻击力。限一次选择：花费1k，改为自己减三攻击力，使一个友方角色加二攻击力。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "qiutu/过度专注",
+          "name": "过度专注",
+          "type": "passive",
+          "text": "过度专注：自己攻击和反伤造成的伤害减半（向下取整）。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "lvshi",
+      "name": "律师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "lvshi/庄园老友",
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "lvshi/要点记录",
+          "name": "要点记录",
+          "type": "passive",
+          "text": "要点记录：回合结束时，攻击力、血量各+1。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "maoxianjia",
+      "name": "冒险家",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 3,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "maoxianjia/探险幻想",
+          "name": "探险幻想",
+          "type": "passive",
+          "text": "探险幻想：回合结束时，攻击力+2。攻击后，攻击力改为2。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "maoxianjia/密码书页",
+          "name": "密码书页",
+          "type": "passive",
+          "text": "密码书页：亡计：指定一个角色，使其获得自身当前攻击力的攻击力，持续至下一个友方回合结束。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "maoxianjia/格列佛游记",
+          "name": "格列佛游记",
+          "type": "passive",
+          "text": "格列佛游记：有其他队友存活时，获得“不可被攻击”。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "xinlixuejia",
+      "name": "心理学家",
+      "rarity": "normal",
+      "atk": 0,
+      "hp": 5,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "xinlixuejia/应激",
+          "name": "应激",
+          "type": "passive",
+          "text": "应激：任何时候，血量小于4，则回复两点血量，限两次。攻击力不可高于1。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "xinlixuejia/移情",
+          "name": "移情",
+          "type": "cooldown",
+          "text": "移情（CD：0）：将自己的至多两点血转移给一个角色（对方视为回复血量）。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "xinlixuejia/牵绊",
+          "name": "牵绊",
+          "type": "passive",
+          "text": "牵绊：可救援“病患”。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    }
+  ]
+}

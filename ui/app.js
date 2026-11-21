@@ -7,6 +7,14 @@
   var DATA = (typeof window !== 'undefined' && window.IDD_DATA) || { characters: [], items: [] };
   var CHARS = DATA.characters || [];
   var ITEMS = DATA.items || [];
+  var EFFECTS = DATA.effects || { skills: [], items: [] };
+
+  // 效果表索引只建一次（核心只读数据，不判断规则）。
+  var FX_INDEX = null;
+  function fxIndex() {
+    if (!FX_INDEX) FX_INDEX = require(['units']).indexEffects(EFFECTS);
+    return FX_INDEX;
+  }
 
   var RARITY_LABEL = { normal: '普通', epic: '史诗', limited: '限定', legend: '传说', unknown: '未知' };
 
@@ -25,6 +33,10 @@
       maxHp: def.hp || 1,
       initialMaxHp: def.hp || 1,
       tempHp: 0,
+      statuses: [],
+      items: [],
+      // P5：技能运行时状态由内核构造；没有效果数据时 effect 为 null，界面只展示原文。
+      skills: def.id ? require(['units']).buildUnitSkills(def.id, skills, fxIndex()) : [],
       hasReflect: true, // 默认全员反伤（古董商/盲女等技能文本以此为前提）
       hasRescue: hasRescue,
       charId: def.id
@@ -43,7 +55,7 @@
     var meta = [];
     if (s.type && s.type !== 'unknown') meta.push(s.type);
     if (s.cd != null) meta.push('CD ' + s.cd);
-    if (s.cooldown != null) meta.push('CD ' + s.cooldown);
+    if (s.initialCd != null && s.initialCd !== 0) meta.push('初始CD ' + s.initialCd);
     if (s.durability != null) meta.push('耐久 ' + s.durability);
     if (s.cost != null) meta.push('费 ' + s.cost);
     return h('li', { key: key, className: 'skill', title: s.text },
@@ -187,8 +199,11 @@
             (step.action === 'ban' ? 'BAN' : '选人') + '，还需 ' + choices.remaining + ' 个')
           : h('span', { className: 'badge' }, 'BP 结束'),
         h('span', { className: 'grow' }),
-        choices && choices.canEndStep
-          ? h('button', { onClick: props.onEndStep }, '结束本轮选择（可少于 3 个）')
+        choices && choices.canUndo
+          ? h('button', { onClick: props.onUndo }, '撤回上一步')
+          : null,
+        choices && choices.canConfirm
+          ? h('button', { className: 'primary', onClick: props.onConfirm }, '确认本步')
           : null,
         h('button', {
           className: 'resign-btn',
@@ -210,10 +225,12 @@
         column(sides.first, '先手'),
         column(sides.second, '后手')),
       h('div', { className: 'panel' },
-        h('h3', null, '可选角色（只有可点的能点；点一次即提交，不可撤销）'),
+        h('h3', null, '可选角色（只有可点的能点；点一次即提交，可用「撤回上一步」退回本步最后一次选择）'),
         h('div', { className: 'chars bp-chars' }, CHARS.map(function (c) {
           var probe = { id: c.id, name: c.name, rarity: c.rarity, cost: c.cost };
           var reason = actor && step ? BP.blockReason(st, actor, step.action, probe, cat) : 'BP 已结束';
+          // 本步已选满时禁用全部角色，避免多余点击（内核也会拒绝）。
+          if (reason === null && choices && choices.remaining <= 0) reason = '本步已选满，请点「确认本步」';
           var legal = reason === null;
           return h('button', {
             key: c.id,
@@ -315,12 +332,135 @@
         u.hasReflect ? h('span', { className: 'reflect' }, '反伤 ' + eff) : null),
       h('div', { className: 'card-flags' },
         u.dead ? tag('已死亡') : null,
+        u.isSummon ? tag('召唤物') : null,
         dying ? tag('濒死', 'warn') : null,
         u.attackedThisBigTurn ? tag('本大回合已攻击', 'dim') : null,
         props.phase === u.side && !u.dead && u.hp > 0 ? tag('行动中', 'live') : null),
+      renderActions(u, props),
       skills.length
         ? h('ul', { className: 'skills' }, skills.map(function (s, i) { return skillLine(s, i); }))
         : h('div', { className: 'muted small' }, '无技能数据'));
+  }
+
+  // 单位可用操作：只把内核判定的「可用/不可用」翻译成按钮，不在这里做任何规则判断。
+  function renderActions(u, props) {
+    if (u.dead || props.frozen) return null;
+    var trig = require(['trigger']);
+    var mine = u.side === props.phase;
+    var btns = [];
+    (u.skills || []).forEach(function (s, i) {
+      if (!s.effect || !s.effect.manual) return;
+      // P7-3：反应技能（役鸟守护）不出主动按钮，只在反应窗口里出现。
+      if (s.effect.reaction) return;
+      var reason = trig.canUseSkill(u, s, props.clock);
+      // P7 E2-4：任意阶段技能（安抚物）不受当前小回合限制。
+      var anyPhase = Boolean(s.effect.anyPhase);
+      var dis = Boolean(reason) || (!mine && !anyPhase);
+      var branches = s.effect.branches || [];
+      // P5-15：有分支的技能先出小菜单，点哪个分支就带哪个 variant 进内核。
+      if (branches.length) {
+        btns.push(h('span', { key: 'sk' + i, className: 'branch-group' },
+          h('span', { className: 'branch-title' }, s.def.name + '：'),
+          branches.map(function (b, bi) {
+            // P5-16③：分支可覆盖充能消耗（激励 1/3）。
+            var bReason = trig.canUseSkill(u, s, props.clock, b.cost);
+            // P5：信件分支级条件（冷静：首回合不可用）。
+            if (b.if === 'notFirstBigTurn' && props.clock && props.clock.bigTurn === 1) bReason = '第 1 回合不可使用';
+            var bdis = Boolean(bReason) || (!mine && !anyPhase);
+            return h('button', {
+              key: 'b' + bi,
+              className: 'act-btn branch' + (bdis ? ' off' : ''),
+              title: (bReason || '点击发动') + '｜' + s.def.text,
+              disabled: bdis,
+              style: bdis ? { opacity: 0.45 } : null,
+              onClick: function (ev) { ev.stopPropagation(); if (!bdis) props.onSkill(u.id, i, s.effect, b.label); }
+            }, b.label + (b.cost ? '（' + b.cost + '）' : ''));
+          })));
+        return;
+      }
+      // P6-Q10：技能「指定一个道具」——按己方道具栏里出现过的道具出小菜单，点哪个就带哪个 itemId 进内核。
+      var chooseItem = (s.effect.ops || []).some(function (o) { return o.item === '$chosen'; });
+      if (chooseItem) {
+        var seen = {};
+        var cands = [];
+        ((props.state && props.state.units) || []).forEach(function (x) {
+          if (x.side !== u.side || x.dead) return;
+          (x.items || []).forEach(function (it) {
+            if (!seen[it.itemId]) { seen[it.itemId] = 1; cands.push(it.itemId); }
+          });
+        });
+        var catMap = fxIndex().items;
+        btns.push(h('span', { key: 'sk' + i, className: 'branch-group' },
+          h('span', { className: 'branch-title' }, s.def.name + '：'),
+          cands.length
+            ? cands.map(function (id, ci) {
+              var cat = catMap.get(id);
+              return h('button', {
+                key: 'i' + ci,
+                className: 'act-btn branch' + (dis ? ' off' : ''),
+                title: (reason || '指定一个道具（本大回合不可用 + 永久 -1k）') + '｜' + s.def.text,
+                disabled: dis,
+                style: dis ? { opacity: 0.45 } : null,
+                onClick: function (ev) { ev.stopPropagation(); if (!dis) props.onSkill(u.id, i, s.effect, undefined, id); }
+              }, cat ? cat.name : id);
+            })
+            : h('span', { className: 'muted small' }, '己方道具栏为空')));
+        return;
+      }
+      btns.push(h('button', {
+        key: 'sk' + i,
+        className: 'act-btn' + (dis ? ' off' : ''),
+        title: (reason || '点击发动') + '｜' + s.def.text,
+        disabled: dis,
+        style: dis ? { opacity: 0.45 } : null,
+        onClick: function (ev) { ev.stopPropagation(); if (!dis) props.onSkill(u.id, i, s.effect); }
+      }, s.def.name));
+    });
+    (u.items || []).forEach(function (it, i) {
+      var cat = fxIndex().items.get(it.itemId);
+      var price = require(['items']).itemPrice({
+        item: { id: it.itemId, name: cat ? cat.name : it.itemId, cost: cat ? cat.cost : null },
+        owned: it,
+        statuses: u.statuses
+      });
+      var label = (cat ? cat.name : it.itemId) + (it.nameKey ? '·' + it.nameKey : '') + (price != null ? '（' + price + '）' : '');
+      var dis = !mine || !cat;
+      // P7-2 X6：抉择式道具（八音盒）先出分支小菜单，点哪个分支带哪个 variant 进内核。
+      var branches = (cat && cat.effect && cat.effect.branches) || [];
+      if (branches.length) {
+        btns.push(h('span', { key: 'it' + i, className: 'branch-group' },
+          h('span', { className: 'branch-title' }, label + '：'),
+          branches.map(function (b, bi) {
+            return h('button', {
+              key: 'b' + bi,
+              className: 'act-btn branch item' + (dis ? ' off' : ''),
+              title: (dis ? '当前不可用' : '点击使用道具') + '｜' + b.label,
+              disabled: dis,
+              style: dis ? { opacity: 0.45 } : null,
+              onClick: function (ev) { ev.stopPropagation(); if (!dis) props.onItem(u.id, i, cat.effect, b.label); }
+            }, b.label);
+          })));
+        return;
+      }
+      btns.push(h('button', {
+        key: 'it' + i,
+        className: 'act-btn item' + (dis ? ' off' : ''),
+        title: cat ? '点击使用道具' : '该道具暂无效果数据',
+        disabled: dis,
+        style: dis ? { opacity: 0.45 } : null,
+        onClick: function (ev) { ev.stopPropagation(); if (!dis) props.onItem(u.id, i, cat.effect); }
+      }, label));
+    });
+    if (u.isSummon && props.canDestroy && props.onDestroy) {
+      btns.push(h('button', {
+        key: 'destroy',
+        className: 'act-btn',
+        title: '记者存活时可主动使幻影死亡（不触发受击后的临时血量）',
+        onClick: function (ev) { ev.stopPropagation(); props.onDestroy(); }
+      }, '令其消散'));
+    }
+    if (!btns.length) return null;
+    return h('div', { className: 'card-actions' }, btns);
   }
 
   // ---------- 事件日志 ----------
@@ -329,6 +469,11 @@
     switch (e.type) {
       case 'battleStart': return '战斗开始';
       case 'attack': return n(e.attacker) + ' 攻击 ' + n(e.target) + '，造成 ' + e.damage + ' 点伤害（剩 ' + e.hpAfter + '）';
+      case 'interruptPending': return (e.kind === 'attack'
+        ? n(e.attacker) + ' 宣告攻击 ' + n(e.target)
+        : n(e.target) + ' 将要受到伤害') + '：等待受击方决定是否使用反应';
+      case 'attackInterrupted': return n(e.unit) + ' 使用 ' + e.item + ' 打断，本次伤害 ×' + e.factor;
+      case 'interruptSkill': return n(e.unit) + ' 使用 ' + e.skill + ' 守护 ' + n(e.target) + '，免疫本次伤害';
       case 'reflect': return n(e.target) + ' 反伤 ' + n(e.attacker) + '，造成 ' + e.damage + ' 点（剩 ' + e.hpAfter + '）';
       case 'dying': return n(e.unit) + ' 进入濒死';
       case 'death': return n(e.unit) + ' 死亡';
@@ -336,6 +481,12 @@
       case 'smallTurnEnd': return '第 ' + e.bigTurn + ' 大回合 ' + (e.phase === 'first' ? '先手' : '后手') + ' 小回合结束';
       case 'bigTurnEnd': return '第 ' + e.bigTurn + ' 大回合结束';
       case 'resign': return sideLabel(e.side) + ' 投降';
+      case 'damage': return n(e.target) + ' 受到 ' + e.amount + ' 点伤害（剩 ' + e.hpAfter + '）';
+      case 'heal': return n(e.target) + ' 回复血量（现在 ' + e.hpAfter + '）';
+      case 'tempHp': return n(e.target) + ' 获得临时血量（合计 ' + e.total + '）';
+      case 'swapStat': return '交换数值：' + n(e.a) + ' / ' + n(e.b);
+      case 'swapPosition': return '交换站位：' + n(e.a) + ' / ' + n(e.b);
+      case 'unsupportedEffect': return '【未实装效果】' + (e.key || e.note || '');
       case 'victory': return '对局结束：' + sideLabel(e.winner) + ' 胜（' + e.reason + '）';
       default: return e.type;
     }
@@ -349,7 +500,7 @@
     var err = props.error;
     var units = state.units;
     var phase = state.clock.phase;
-    var penaltyActive = units.some(function (u) { return require(['combat']).effectiveAtk(u, state.clock) < u.atk; });
+    var penaltyActive = state.clock.bigTurn === 1;
     var resignState = useState(null);
     var askResign = resignState[0], setAskResign = resignState[1];
     // 玩家名（由 App 按「本小局谁先手」传入）；单独渲染时退回「先手/后手」。
@@ -373,6 +524,12 @@
         h('div', { className: 'cards' }, list.map(function (u) {
           var mine = u.side === phase;
           var isTarget = legal.indexOf(u.id) >= 0;
+          // P5-16④：记者存活且轮到自己时，可令自己的召唤物消散。
+          var owner = u.isSummon && u.ownerId
+            ? units.filter(function (x) { return x.id === u.ownerId; })[0]
+            : null;
+          var canDestroy = Boolean(owner && !owner.dead && owner.canDestroySummon &&
+            !state.winner && !mustHandle && phase === owner.side);
           var click = null;
           if (!state.winner && !mustHandle) {
             if (isTarget) click = function () { props.onSelect(u.id); };          // 点敌人＝确认攻击
@@ -382,6 +539,11 @@
             key: u.id, unit: u, phase: phase, clock: state.clock,
             selected: sel === u.id,
             targetable: isTarget,
+            frozen: Boolean(state.winner) || Boolean(mustHandle),
+            onSkill: props.onSkill,
+            onItem: props.onItem,
+            canDestroy: canDestroy,
+            onDestroy: canDestroy ? function () { props.onDestroy(owner.id, u.id); } : null,
             onClick: click
           });
         })));
@@ -393,11 +555,40 @@
     var pending = gameApi.pendingDying(state);
     var mustHandle = pending.length ? pending[0] : null;
     var rescueOps = rescueFor ? gameApi.legalRescueOps(state, rescueFor) : [];
+    // P5-16⑥ 飞行家：血量不足时仍可用「消耗飞行器」救援，因此单独列出。
+    var flyerRescuers = function (u) {
+      return units.filter(function (x) {
+        return !x.dead && x.hp > 0 && x.side === u.side && x.id !== u.id && x.canRescueByFlyer && x.hasRescue &&
+          x.skills.some(function (s) { return s.def.name === '飞行器' && (s.durability || 0) > 0; });
+      });
+    };
+    // P5-16⑥ 入殓师：「附容返生」可在己方回合无限次转移，给一个最简操作面板。
+    var markPanel = (function () {
+      var actor = units.filter(function (x) { return x.side === phase && !x.dead && x.canTransferMark; })[0];
+      if (!actor || state.winner) return h('div', { className: 'muted small' }, '当前无可用转移');
+      var holder = units.filter(function (x) {
+        return x.side === actor.side && !x.dead &&
+          x.statuses.some(function (s) { return s.kind === 'mark' && s.key === 'furongfansheng'; });
+      })[0];
+      if (!holder) return h('div', { className: 'muted small' }, '场上还没有附容返生标记');
+      var targets = units.filter(function (x) { return x.side === actor.side && !x.dead && x.id !== holder.id; });
+      return h('div', { className: 'rescue-btns' },
+        h('span', { className: 'muted small' }, '现在在 ' + nameOf(holder.id) + ' 身上：'),
+        targets.map(function (t) {
+          return h('button', {
+            key: 'mk-' + t.id,
+            disabled: !!mustHandle,
+            onClick: function () { props.onTransferMark(actor.id, holder.id, t.id); }
+          }, '移到 ' + nameOf(t.id));
+        }));
+    })();
 
     return h('div', { className: 'battle' },
       h('div', { className: 'topbar' },
         h('span', { className: 'badge' }, '第 ' + state.clock.bigTurn + ' 大回合'),
         h('span', { className: 'badge live' }, (phase === 'first' ? '先手' : '后手') + '行动'),
+        h('span', { className: 'badge dim', title: '每大回合开始双方各 +3k（QA-02）' },
+          '资源 ' + money(state.k.first) + ' / ' + money(state.k.second)),
         penaltyActive ? h('span', { className: 'badge dim', title: '机制 R15：第一回合全体攻击力 -1（反伤同减）' }, '首回合：攻击 -1') : null,
         state.winner ? h('span', { className: 'badge warn' }, playerShort(state.winner) + '胜') : null,
         mustHandle ? h('span', { className: 'badge warn' }, '必须先处理濒死：' + unitLabel(mustHandle)) : null,
@@ -421,6 +612,57 @@
           onClick: function () { setAskResign(null); props.onResign(askResign); }
         }, '确认投降'),
         h('button', { onClick: function () { setAskResign(null); } }, '取消')) : null,
+      // P7-2（X5）/ P7-3：伤害前反应窗口——魔术棒（仅攻击）或反应技能（役鸟守护，任意伤害）二选一。
+      state.pendingInterrupt ? (function () {
+        var win = state.pendingInterrupt;
+        var defender = units.filter(function (u) { return u.id === win.targetId; })[0];
+        var list = win.kind !== 'attack' || !defender ? [] : defender.items.map(function (it, i) {
+          var cat = state.effects && state.effects.items && state.effects.items.get(it.itemId);
+          var eff = cat && cat.effect;
+          if (!eff || eff.reaction !== 'beforeAttack') return null;
+          var cost = it.cost != null ? it.cost : (cat && cat.cost);
+          return { i: i, name: (cat && cat.name) || it.itemId, cost: cost };
+        }).filter(Boolean);
+        var reacts = [];
+        state.units.forEach(function (u) {
+          if (u.dead || !defender || u.side !== defender.side) return;
+          (u.skills || []).forEach(function (sk, si) {
+            var eff = sk.effect;
+            if (!eff || eff.reaction !== 'beforeDamage') return;
+            var lim = eff.usageLimit && eff.usageLimit.perGame;
+            if (lim !== undefined && sk.usedPerGame >= lim) return;
+            var need = eff.cost && eff.cost.charge != null ? eff.cost.charge : (sk.def && sk.def.cost) || 0;
+            if (sk.def && sk.def.type === 'charge' && sk.charge < need) return;
+            reacts.push({ unitId: u.id, skillIndex: si, name: (sk.def && sk.def.name) || eff.name, charge: sk.charge, need: need });
+          });
+        });
+        return h('div', { className: 'interrupt-mask' },
+          h('div', { className: 'interrupt-card' },
+            h('h3', null, win.kind === 'attack' ? '攻击打断窗口' : '伤害反应窗口'),
+            h('p', null, win.kind === 'attack' && win.attackerId
+              ? nameOf(win.attackerId) + ' 正在攻击 ' + nameOf(win.targetId)
+              : nameOf(win.targetId) + ' 将要受到伤害'),
+            h('p', { className: 'muted small' },
+              '可立即使用一个反应：魔术棒仅在受到攻击时可用（伤害减半）；役鸟守护任意受伤时可用（免疫本次伤害，先知攻击力 -1）。'),
+            reacts.map(function (x) {
+              return h('button', {
+                key: 'rs-' + x.unitId + '-' + x.skillIndex,
+                className: 'warn',
+                onClick: function () { props.onInterruptSkill(x.unitId, x.skillIndex); }
+              }, nameOf(x.unitId) + ' 使用 ' + x.name + '（充能 ' + x.charge + '/' + x.need + '）：免疫本次伤害');
+            }),
+            list.length === 0 ? null : list.map(function (x) {
+              return h('button', {
+                key: 'int-' + x.i,
+                className: 'warn',
+                onClick: function () { props.onInterruptItem(x.i); }
+              }, '使用 ' + x.name + (x.cost != null ? '（' + money(x.cost) + '）' : '') + '：伤害减半');
+            }),
+            reacts.length + list.length === 0
+              ? h('span', { className: 'muted small' }, '没有可用的反应')
+              : null,
+            h('button', { onClick: props.onResolveInterrupt }, '不打断，继续结算')));
+      })() : null,
       err ? h('div', { className: 'error' }, err) : null,
       h('div', { className: 'board' },
         row('second', playerShort('second') + '（后手）'),
@@ -460,11 +702,19 @@
                         onClick: function () { props.onRescue(u.id, rid); }
                       }, (op.kind === 'self' ? '自我救援' : nameOf(rid) + ' 救援') + '（- ' + op.cost + ' 血）');
                     }),
+                  flyerRescuers(u).map(function (x) {
+                    return h('button', {
+                      key: 'flyer-' + x.id,
+                      onClick: function () { props.onRescueFlyer(u.id, x.id); }
+                    }, nameOf(x.id) + ' 消耗飞行器（无伤）');
+                  }),
                   h('button', {
                     className: 'danger',
                     onClick: function () { props.onRescue(u.id, null); }
                   }, '放弃救援（该角色死亡）')) : null);
-            })))),
+            }))),
+          h('h3', null, '附容返生转移'),
+          markPanel),
       props.footer ? h('div', { className: 'battle-footer' }, props.footer) : null);
   }
 
@@ -491,6 +741,9 @@
     var error = errState[0], setError = errState[1];
     var bpErrState = useState(null);
     var bpError = bpErrState[0], setBpError = bpErrState[1];
+    // P5：技能/道具需要选目标时先挂在这里，下一次点角色卡即确认目标。
+    var pendState = useState(null);
+    var pendingAction = pendState[0], setPendingAction = pendState[1];
 
     function resetBattle() {
       setState(null);
@@ -500,7 +753,7 @@
     }
 
     function startSeries(mode) {
-      setSeries(BP.createSeries(mode));
+      setSeries(BP.createSeries(mode, true));
       setOrder(null);
       setBpError(null);
       resetBattle();
@@ -549,7 +802,8 @@
         first: BP.toItemBudget(14000 - series.current.players[sides.first].spent),
         second: BP.toItemBudget(14000 - series.current.players[sides.second].spent)
       };
-      setState(gameApi.createGame(units, { itemBudget: budget }));
+      setState(gameApi.createGame(units, { itemBudget: budget, effects: fxIndex() }));
+      setPendingAction(null);
       setSelected(null);
       setRescueFor(null);
       setError(null);
@@ -566,6 +820,13 @@
     }
 
     function onSelect(id) {
+      if (pendingAction) {
+        var act = pendingAction;
+        setPendingAction(null);
+        if (act.kind === 'skill') run({ type: 'useSkill', unitId: act.unitId, skillIndex: act.index, targetId: id, variant: act.variant, itemId: act.itemId });
+        else run({ type: 'useItem', unitId: act.unitId, itemIndex: act.index, targetId: id, variant: act.variant });
+        return;
+      }
       if (selected && selected !== id) {
         var legal = gameApi.legalAttackTargets(state, selected).map(function (u) { return u.id; });
         if (legal.indexOf(id) >= 0) {
@@ -578,6 +839,31 @@
       setRescueFor(null);
     }
 
+    // 技能/道具入口：要目标的挂起等待点选，不需要目标的立即执行。
+    // P5-15：variant 为技能分支名；分支自带 target 时以分支为准。
+    // P6-Q10：itemId 为「指定一个道具」类技能选中的道具 id。
+    function beginAction(kind, unitId, index, effect, variant, itemId) {
+      var branch = null;
+      if (variant && effect && effect.branches) {
+        effect.branches.some(function (b) { if (b.label === variant) { branch = b; return true; } return false; });
+      }
+      var target = (branch && branch.target) || (effect && effect.target);
+      var needTarget = target && target.mode !== 'self' && target.mode !== 'none' && !target.optional;
+      setSelected(null);
+      setRescueFor(null);
+      if (!needTarget) {
+        if (kind === 'skill') run({ type: 'useSkill', unitId: unitId, skillIndex: index, variant: variant, itemId: itemId });
+        else run({ type: 'useItem', unitId: unitId, itemIndex: index, variant: variant });
+        return;
+      }
+      setPendingAction({ kind: kind, unitId: unitId, index: index, variant: variant, itemId: itemId });
+      setError('请点一名角色作为目标（再点一次该技能可取消）');
+    }
+
+    function cancelPending() {
+      setPendingAction(null);
+      setError(null);
+    }
     function recordWin(winnerKey, currentSeries) {
       var recorded = BP.recordRoundWinner(currentSeries, winnerKey);
       resetBattle();
@@ -625,6 +911,8 @@
         error: bpError,
         onAct: applyBpAction,
         onEndStep: function () { applyBpAction({ type: 'endStep' }); },
+        onUndo: function () { applyBpAction({ type: 'undo' }); },
+        onConfirm: function () { applyBpAction({ type: 'confirmStep' }); },
         onResign: resignBp
       });
     }
@@ -663,12 +951,35 @@
       },
       onResign: function (side) { run({ type: 'resign', side: side }); },
       onSelect: onSelect,
+      onSkill: function (unitId, index, effect, variant, itemId) { beginAction('skill', unitId, index, effect, variant, itemId); },
+      onItem: function (unitId, index, effect, variant) { beginAction('item', unitId, index, effect, variant); },
+      onDestroy: function (unitId, summonId) { run({ type: 'destroySummon', unitId: unitId, summonId: summonId }); },
+      pendingAction: pendingAction,
+      onCancelPending: cancelPending,
       onPickRescueTarget: function (id) { setRescueFor(id); },
       onRescue: function (targetId, rescuerId) {
         run({ type: 'rescue', targetId: targetId, rescuerId: rescuerId });
         setRescueFor(null);
       },
+      onRescueFlyer: function (targetId, rescuerId) {
+        run({ type: 'rescue', targetId: targetId, rescuerId: rescuerId, useFlyer: true });
+        setRescueFor(null);
+      },
+      onTransferMark: function (unitId, fromId, toId) {
+        run({ type: 'transferMark', unitId: unitId, fromId: fromId, toId: toId });
+      },
       onEndTurn: function () { run({ type: 'endTurn' }); setSelected(null); },
+      // P7-2（X5）/ P7-3：反应窗口的三个出口（魔术棒 / 役鸟 / 不打断）。
+      onInterruptItem: function (itemIndex) {
+        if (!state.pendingInterrupt) return;
+        run({ type: 'interruptWithItem', unitId: state.pendingInterrupt.targetId, itemIndex: itemIndex });
+        setSelected(null);
+      },
+      onInterruptSkill: function (unitId, skillIndex) {
+        run({ type: 'interruptWithSkill', unitId: unitId, skillIndex: skillIndex });
+        setSelected(null);
+      },
+      onResolveInterrupt: function () { run({ type: 'resolveInterrupt' }); setSelected(null); },
       onRestart: function () { startSeries(series.mode); }
     });
   }

@@ -26,7 +26,8 @@ load(p('temp', 'build', 'ui', 'core.raw.js'));
 
 const chars = JSON.parse(readFileSync(p('data', 'characters.json'), 'utf8')).characters;
 const items = JSON.parse(readFileSync(p('data', 'items.json'), 'utf8')).items;
-ctx.IDD_DATA = { characters: chars, items };
+const effects = JSON.parse(readFileSync(p('data', 'effects.json'), 'utf8'));
+ctx.IDD_DATA = { characters: chars, items, effects };
 load(p('ui', 'app.js'));
 
 const app = ctx.IDDApp;
@@ -104,6 +105,21 @@ expect(html.includes('投降'), '对局界面缺少投降入口');
 expect(html.includes('targetable'), '选中攻击者后，敌人卡没有可攻击标记（点不动）');
 expect(html.includes('反伤'), '角色卡没有显示反伤数值');
 expect(html.includes('首回合：攻击 -1'), '首回合攻击 -1 没有提示');
+// 2a) P5：技能/道具按钮要真的出现在可用单位卡上
+{
+  const post = chars.find((c) => c.id === 'youcha');
+  const s2 = game.createGame([mk(post, 'first', 1), mk(chars[0], 'second', 1)], { effects: ctx.require(['units']).indexEffects(effects) });
+  const a = s2.units[0];
+  a.items.push({ itemId: 'wangyouzhixiang', cost: 1000 });
+  const axHtml = render(h(app.BattleScreen, {
+    state: s2, selected: null, rescueFor: null, error: null,
+    onSelect: noop, onPickRescueTarget: noop, onRescue: noop, onEndTurn: noop, onRestart: noop,
+    onSkill: noop, onItem: noop
+  }));
+  expect(axHtml.includes('act-btn'), '对局界面没有渲染技能/道具按钮');
+  expect(axHtml.includes('邮件'), '邮差的主动技能没有出现在按钮里');
+  expect(axHtml.includes('忘忧之香'), '道具按钮没有显示道具名');
+}
 
 // 2b) 投降：内核记事件，界面出确认条文案与胜方
 {
@@ -148,6 +164,8 @@ const strong = chars.filter((c) => (c.atk || 0) >= 2 && (c.hp || 1) >= 2).slice(
       const targets = game.legalAttackTargets(s, actor.id).slice().sort((a, b) => a.hp - b.hp);
       if (!targets.length) continue;
       s = game.applyAction(s, { type: 'attack', attackerId: actor.id, targetId: targets[0].id }).state;
+      // P7-2（X5）/P7-3：出现反应窗口时这里一律选「不打断」，等价于界面上点那个按钮。
+      if (s.pendingInterrupt) s = game.applyAction(s, { type: 'resolveInterrupt' }).state;
       if (s.winner || s.dyingQueue.length > 0) break; // 出现濒死就回外层先处理
     }
     if (s.winner) break;
@@ -177,6 +195,7 @@ const strong = chars.filter((c) => (c.atk || 0) >= 2 && (c.hp || 1) >= 2).slice(
     const t = game.legalAttackTargets(s, attacker.id)[0];
     if (!t) break;
     s = game.applyAction(s, { type: 'attack', attackerId: attacker.id, targetId: t.id }).state;
+    if (s.pendingInterrupt) s = game.applyAction(s, { type: 'resolveInterrupt' }).state;
   }
   const dyingUnit = s.units.find((u) => !u.dead && u.hp <= 0);
   expect(!!dyingUnit, '测试前置失败：没能把某个单位打到濒死');
@@ -189,6 +208,68 @@ const strong = chars.filter((c) => (c.atk || 0) >= 2 && (c.hp || 1) >= 2).slice(
     expect(htmlDying.includes('必须先处理濒死：'), '濒死未处理时，顶栏没有「必须先处理」提示');
   }
 }
+
+// 3c) 打断窗口遮罩（P7-2 X5）：受击方持有魔术棒时必须能看到「使用/不打断」两个出口
+{
+  const idx = {
+    skills: new Map(),
+    items: new Map([['moshubang', {
+      id: 'moshubang', name: '魔术棒', cost: 1000,
+      effect: { ops: [{ op: 'interruptDamage', ref: 'victim', factor: 0.5 }], reaction: 'beforeAttack' }
+    }]])
+  };
+  const a = chars[0], b = chars[1];
+  let s = game.createGame([mk(a, 'first', 1), mk(b, 'second', 1)], { effects: idx });
+  s = {
+    ...s,
+    units: s.units.map((u) => (u.id === 'first-1' ? { ...u, items: [{ itemId: 'moshubang', cost: null }] } : u)),
+    pendingInterrupt: {
+      kind: 'attack', attackerId: 'second-1', targetId: 'first-1',
+      resume: { type: 'attack', attackerId: 'second-1', targetId: 'first-1', offered: ['first-1'] }
+    }
+  };
+  const html = render(h(app.BattleScreen, {
+    state: s, selected: null, rescueFor: null, error: null,
+    onSelect: noop, onPickRescueTarget: noop, onRescue: noop, onEndTurn: noop, onRestart: noop,
+    onInterruptItem: noop, onInterruptSkill: noop, onResolveInterrupt: noop
+  }));
+  expect(html.includes('攻击打断窗口'), '打断窗口遮罩没有渲染');
+  expect(html.includes('不打断，继续结算'), '打断窗口缺少「不打断」出口');
+  expect(html.includes('魔术棒'), '打断窗口没有列出可用的魔术棒');
+}
+
+// 3d) 伤害反应窗口（P7-3）：技能伤害前，己方先知可用役鸟守护免疫本次伤害
+{
+  const seer = chars.find((c) => c.name === '先知') || chars[0];
+  const idx = {
+    skills: new Map([[`${seer.id}/役鸟守护`, {
+      id: `${seer.id}/役鸟守护`, name: '役鸟守护', type: 'charge', manual: true, trigger: 'manual',
+      reaction: 'beforeDamage', cost: { charge: 1 },
+      ops: [{ op: 'immune', ref: 'target', scope: 'damage', uses: 1, duration: 'instant' }]
+    }]]),
+    items: new Map()
+  };
+  let s = game.createGame([mk(chars[0], 'first', 1), mk(seer, 'second', 1)], { effects: idx });
+  s = {
+    ...s,
+    units: s.units.map((u) => (u.id === 'second-1'
+      ? { ...u, skills: u.skills.map((sk) => ({ ...sk, charge: 1 })) }
+      : u)),
+    pendingInterrupt: {
+      kind: 'damage', targetId: 'second-1',
+      resume: { type: 'endTurn' }
+    }
+  };
+  const html = render(h(app.BattleScreen, {
+    state: s, selected: null, rescueFor: null, error: null,
+    onSelect: noop, onPickRescueTarget: noop, onRescue: noop, onEndTurn: noop, onRestart: noop,
+    onInterruptItem: noop, onInterruptSkill: noop, onResolveInterrupt: noop
+  }));
+  expect(html.includes('伤害反应窗口'), '伤害反应窗口没有渲染');
+  expect(html.includes('役鸟守护'), '伤害反应窗口没有列出役鸟守护');
+  expect(html.includes('免疫本次伤害'), '伤害反应窗口没有说明免疫');
+}
+
 
 // 4) 每个角色都能单独渲染（技能文本里含引号、换行也不会炸）
 for (const c of chars) {

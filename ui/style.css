@@ -119,3 +119,16 @@ button.primary { background: #2f6f4f; border-color: #3d8c65; }
 .resign-btn { font-size: 12px; padding: 2px 8px; }
 .resign-confirm { display: flex; align-items: center; gap: 10px; background: #4d2018; border: 1px solid #c0472f; color: #ffd6cc; border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; font-size: 13px; }
 .resign-confirm button { font-size: 12px; }
+
+/* P7-2（X5）：攻击打断窗口遮罩 */
+.interrupt-mask { position: fixed; inset: 0; background: rgba(8, 10, 16, 0.72); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.interrupt-card { width: min(520px, 92vw); background: #171d2a; border: 1px solid #6b5324; border-radius: 10px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); }
+.interrupt-card h3 { margin: 0 0 2px; font-size: 16px; color: #f0d79a; }
+.interrupt-card button { font-size: 13px; padding: 6px 10px; }
+
+/* P5：角色卡上的技能/道具按钮 */
+.card-actions { display: flex; gap: 4px; flex-wrap: wrap; margin: 4px 0 6px; }
+.act-btn { font-size: 11px; padding: 2px 6px; border: 1px solid #3a4358; background: #1a2130; color: #cfd6e6; border-radius: 4px; cursor: pointer; }
+.act-btn:hover { background: #232c3f; }
+.act-btn.item { border-color: #5a4a2a; color: #e0c78a; }
+.act-btn.off { cursor: not-allowed; }

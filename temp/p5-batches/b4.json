@@ -1,0 +1,197 @@
+{
+  "batch": 4,
+  "characters": [
+    {
+      "id": "zhoushushi",
+      "name": "咒术师",
+      "rarity": "normal",
+      "atk": 0,
+      "hp": 4,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "zhoushushi/猿猴咒像",
+          "name": "猿猴咒像",
+          "type": "charge",
+          "text": "猿猴咒像（自己及相邻的两个角色受到伤害时充能一次：0/5）：咒像守护（消耗充能：1）：对一个角色造成1点伤害。咒像引爆（消耗充能：3）：对一个角色造成2点伤害，并使其下个回合不可攻击。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "wanjushang",
+      "name": "玩具商",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 3,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "wanjushang/安抚物",
+          "name": "安抚物",
+          "type": "active",
+          "text": "安抚物：游戏的任意阶段，可获取镇静剂、魔术棒、忘忧之香和钢铁护肘中的任意一个道具，并使其花费减一，限一次。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "wanjushang/玩具匣",
+          "name": "玩具匣",
+          "type": "active",
+          "text": "玩具匣（每回合限三次，一回合内不可重复作用于同一个道具）：使一个己方道具花费减一，但本回合不可使用。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "wanjushang/弹射板车",
+          "name": "弹射板车",
+          "type": "battlecry",
+          "text": "弹射板车：战吼：获得两个“板车”。玩具商使用板车时，不会被封技能。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "kantanyuan",
+      "name": "勘探员",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 4,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "kantanyuan/陨石磁铁",
+          "name": "陨石磁铁",
+          "type": "charge",
+          "text": "陨石磁铁（每回合充能：1/3）：抉择：使一个角色减一攻击力，己方回合结束时触发。 或 使一个角色下个回合无法攻击，勘探员受到一点伤害，己方回合结束时触发。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "moshushi",
+      "name": "魔术师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "moshushi/魔术演绎",
+          "name": "魔术演绎",
+          "type": "battlecry",
+          "text": "魔术演绎：战吼：获得三个“魔术棒”。“魔术师”使用魔术棒会使伤害降低至最多1点。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "huajia",
+      "name": "画家",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 2,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "huajia/感性直观",
+          "name": "感性直观",
+          "type": "passive",
+          "text": "感性直观：可被救援两次，被救援时不会使血量上限减半。救援“画家”时，救援者扣的血量-1。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "huajia/艺术敏感",
+          "name": "艺术敏感",
+          "type": "passive",
+          "text": "艺术敏感（限两次）：攻击后，获得被攻击者的“画作”。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "xiaonvhai",
+      "name": "小女孩",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "xiaonvhai/记忆同步",
+          "name": "记忆同步",
+          "type": "cooldown",
+          "text": "记忆同步（CD：1）：附身一个角色（附身期间“小女孩”获得免疫），使其获得1点临时血量，临时血量扣完时自动结束技能。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "xiaonvhai/回忆碎片",
+          "name": "回忆碎片",
+          "type": "charge",
+          "text": "回忆碎片（记忆同步期间，每回合充能：1/3）：使一个角色攻击力-1，持续一回合。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "xiaoshuojia",
+      "name": "小说家",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 3,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "xiaoshuojia/隐喻",
+          "name": "隐喻",
+          "type": "cooldown",
+          "text": "隐喻（CD：1）：与一个角色互换位置（可与敌方角色互换），己方回合结束时换回。换回时，若有一方死亡，则将另一方单方面换回；换回时，若被互换的另一个角色血量小于三，则其血量加一。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "youcha",
+      "name": "邮差",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 2,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "youcha/邮件",
+          "name": "邮件",
+          "type": "cooldown",
+          "text": "邮件（CD：1）：给一个人物送信，使其和自己获得信件效果，“邮差”死亡后失效。\n急切的信件：获得1点临时血量，持续两回合。\n诀别的信件：受到攻击后，回复一点血量，持续一回合。\n冷静的信件：攻击力+1，持续一回合，第一回合无法使用。\n勇敢的信件：救援扣的血减一，持续两回合。\n激励的信件：本回合可再次攻击，但攻击力上限为一。\n希望的信件：加（5-X）点血量，X为己方场上人物数量。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "youcha/送信犬",
+          "name": "送信犬",
+          "type": "active",
+          "text": "送信犬（限一次）：使一个人物攻击力-1。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "youcha/期待",
+          "name": "期待",
+          "type": "unknown",
+          "text": "期待：唔……如果一直没有人送信给自己，为什么自己不先偷看一封呢？",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    }
+  ]
+}

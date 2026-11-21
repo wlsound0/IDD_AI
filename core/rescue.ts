@@ -9,6 +9,7 @@
 // D18：画家可被救 2 次，被救不减上限，救援者扣血 -1。
 
 import { rescuedMaxHp, type Combatant } from './combat';
+import { flagValue, hasFlag, type Status } from './status';
 import type { Side } from './types';
 
 /** 能执行救援的一方。 */
@@ -29,10 +30,14 @@ export interface Rescuer extends Combatant {
   mustUseBodyForRescue?: boolean;
   /** 是否拥有自我救援能力。 */
   canSelfRescue?: boolean;
+  /** 只能救援该角色名（心理学家「牵绊」→ 病患）。 */
+  rescueTargetName?: string;
 }
 
 /** 会进入濒死、可被救援的一方。 */
 export interface RescueTarget extends Combatant {
+  /** 角色名：供「只能救援某角色」的规则过滤。 */
+  name?: string;
   /** 阵营，用于限定「己方角色」才能救援。 */
   side?: Side;
   /** 召唤物：不可救援、无濒死（D06）。 */
@@ -63,14 +68,47 @@ export function rescueCost(rescuer: Rescuer, target: RescueTarget): number {
 /** 目标是否还可能被救（不考虑救援者）。 */
 export function isRescuableAtAll(target: RescueTarget): boolean {
   if (target.isSummon) return false;
+  // 雷德「59 区废墟」：不可被救援（flag: cannotBeRescued）。
+  if (hasFlag(target.statuses ?? [], 'cannotBeRescued')) return false;
   if (target.hp > 0) return false;
   return (target.rescueCount ?? 0) < (target.rescueLimit ?? 1);
+}
+
+/**
+ * 把技能给的「救援类」状态叠加到单位的静态字段上，保持 rescue.ts 只认字段。
+ * 对应 op 见 core/effects.ts 的 rescueRule / grantRescue 与 data/effects.json。
+ */
+export function withRescueStatuses<T extends RescueTarget & Rescuer>(u: T): T {
+  const st = (u as { statuses?: Status[] }).statuses ?? [];
+  if (!st.length) return u;
+  const out: T = { ...u };
+  const limit = flagValue(st, 'rescueLimit');
+  if (limit > 0) out.rescueLimit = Math.max(out.rescueLimit ?? 1, limit);
+  const costDelta = flagValue(st, 'rescueCostDelta');
+  if (costDelta !== 0) out.rescueCostDelta = (out.rescueCostDelta ?? 0) + costDelta;
+  if (hasFlag(st, 'noMaxHpHalve')) out.noMaxHpHalvingOnRescue = true;
+  if (hasFlag(st, 'mustUseBodyForRescue')) out.mustUseBodyForRescue = true;
+  const sealedCost = flagValue(st, 'sealedRescueCost');
+  if (sealedCost > 0) {
+    out.rescueCostWhenSealed = sealedCost;
+    out.canRescueWhenSealed = true;
+  }
+  const hpCost = st.filter((s) => s.kind === 'rescueRule' && s.key === 'rescueHpCost').map((s) => s.value).pop();
+  if (hpCost !== undefined) out.rescueCostBase = hpCost;
+  if (hasFlag(st, 'hasRescue')) out.hasRescue = true;
+  // selfRescue 是「可移除的 flag」：条件型被动由 game.ts 的 syncAuras 动态授予/撤销。
+  if (hasFlag(st, 'selfRescue')) out.canSelfRescue = true;
+  const targetNameFlag = st.find((s) => s.kind === 'flag' && s.key.startsWith('rescueTargetName:'));
+  if (targetNameFlag) out.rescueTargetName = targetNameFlag.key.slice('rescueTargetName:'.length);
+  return out;
 }
 
 /** 某个具体救援者能否救这个目标。 */
 export function canRescue(target: RescueTarget, rescuer: Rescuer): boolean {
   if (!isRescuableAtAll(target)) return false;
   if (!rescuer.hasRescue) return false;
+  // 「牵绊」类限制：只能救指定角色名的目标。
+  if (rescuer.rescueTargetName && target.name !== rescuer.rescueTargetName) return false;
   if (rescuer.hp <= 0) return false;
   if (rescuer.sealed && !rescuer.canRescueWhenSealed) return false;
   const cost = rescueCost(rescuer, target);

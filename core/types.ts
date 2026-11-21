@@ -27,6 +27,17 @@ export interface SkillDef {
   cd: number | null;
   /** 双阶段 CD（如玛恩纳「初始CD1、之后CD2」），见 decisions.md Q26。 */
   initialCd: number | null;
+  /**
+   * 充能速率（R05 / decisions.md Q28，P5-9）：每 `turns` 个大回合充能 `amount` 层。
+   * `null` = 不按回合充能（事件驱动，见 `chargeOn`）；缺省按每大回合 1 层。
+   */
+  chargeRate?: { turns: number; amount: number } | null;
+  /** 事件驱动充能：`selfOrAdjacentDamage` = 自己及相邻角色受伤时充能 1 层（猿猴咒像）。 */
+  chargeOn?: 'selfOrAdjacentDamage' | null;
+  /** 初始充能层数（原文 `x/y` 的 x）。 */
+  chargeInitial?: number | null;
+  /** 充能上限（原文 `x/y` 的 y）。 */
+  chargeMax?: number | null;
 }
 
 export interface CharacterDef {

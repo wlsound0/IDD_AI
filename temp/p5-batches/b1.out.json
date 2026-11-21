@@ -1,0 +1,597 @@
+{
+  "batch": 1,
+  "skills": [
+    {
+      "id": "xingyuner/庄园老友",
+      "character": "幸运儿",
+      "name": "庄园老友",
+      "type": "passive",
+      "impl": "none",
+      "manual": false,
+      "trigger": "always",
+      "ops": []
+    },
+    {
+      "id": "xingyuner/幸运包裹",
+      "character": "幸运儿",
+      "name": "幸运包裹",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [],
+      "notes": "从 9 件「幸运儿可获取」的道具中指定一件并获得，花费 -1",
+      "branches": [
+        {
+          "label": "忘忧之香",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "wangyouzhixiang",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "wangyouzhixiang",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "护腕",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "huwan",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "huwan",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "怀表",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "huaibiao",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "huaibiao",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "机械玩偶",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "jixiewanou",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "jixiewanou",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "橄榄球",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "ganlanqiu",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "ganlanqiu",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "手电筒",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "shoudiantong",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "shoudiantong",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "魔术棒",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "moshubang",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "moshubang",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "镇静剂",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "zhenjingji",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "zhenjingji",
+              "amount": -1
+            }
+          ]
+        },
+        {
+          "label": "信号枪",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "xinhaoqiang",
+              "count": 1
+            },
+            {
+              "op": "itemDiscount",
+              "ref": "self",
+              "item": "xinhaoqiang",
+              "amount": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tiaoxiangshi/调香",
+      "character": "调香师",
+      "name": "调香",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "wangyouzhixiang",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "xianzhi/役鸟守护",
+      "character": "先知",
+      "name": "役鸟守护",
+      "type": "charge",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyUnit"
+      },
+      "cost": {
+        "charge": 1
+      },
+      "ops": [
+        {
+          "op": "immune",
+          "ref": "target",
+          "scope": "all",
+          "uses": 1,
+          "duration": "instant"
+        },
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": -1,
+          "duration": "permanent"
+        }
+      ],
+      "notes": "反应技能：己方角色将要受到伤害时（攻击/技能伤害）选择使用，免疫整次伤害，先知攻击力永久 -1；不能主动施放（P7-3 裁决）",
+      "reaction": "beforeDamage"
+    },
+    {
+      "id": "yongbing/自我救援",
+      "character": "佣兵",
+      "name": "自我救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "selfRescue",
+          "ref": "self"
+        }
+      ]
+    },
+    {
+      "id": "yongbing/坚强",
+      "character": "佣兵",
+      "name": "坚强",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "beforeDamage",
+      "ops": [
+        {
+          "op": "damageToMark",
+          "ref": "self",
+          "key": "yongbingMark"
+        },
+        {
+          "op": "drainMarks",
+          "ref": "self",
+          "key": "yongbingMark",
+          "amount": 3,
+          "when": "ownTurnEnd"
+        }
+      ],
+      "notes": "受伤改为等量标记（不触发受伤判定、标记无上限）；己方回合结束最多减 3 点标记并扣等量血；濒死时标记清零"
+    },
+    {
+      "id": "yongbing/钢铁冲刺",
+      "character": "佣兵",
+      "name": "钢铁冲刺",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "huwan",
+          "count": 3
+        },
+        {
+          "op": "itemDiscount",
+          "ref": "self",
+          "item": "huwan",
+          "amount": -1000,
+          "scope": "turn",
+          "duration": "permanent"
+        }
+      ],
+      "notes": "每小回合第一个对自己用的护腕免花费（-1k，每回合首次），护腕数量照常消耗"
+    },
+    {
+      "id": "yongbing/战争后遗症",
+      "character": "佣兵",
+      "name": "战争后遗症",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "damaged",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": -1,
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "id": "shoumuren/救援",
+      "character": "守墓人",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 1
+        }
+      ]
+    },
+    {
+      "id": "shoumuren/安心",
+      "character": "守墓人",
+      "name": "安心",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 0
+        }
+      ],
+      "notes": "救援不扣血，限一次"
+    },
+    {
+      "id": "dafu/救援",
+      "character": "大副",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 1
+        }
+      ]
+    },
+    {
+      "id": "dafu/消失",
+      "character": "大副",
+      "name": "消失",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "beforeDamage",
+      "ops": [
+        {
+          "op": "damageReduce",
+          "ref": "self",
+          "amount": 1,
+          "vs": "all",
+          "minDamage": 2,
+          "duration": "permanent"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noSkillSeal"
+        }
+      ],
+      "notes": "仅受到两点及以上伤害时减一；封技能不失效"
+    },
+    {
+      "id": "dafu/海神怀表",
+      "character": "大副",
+      "name": "海神怀表",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "huaibiao",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "dafu/失乐园",
+      "character": "大副",
+      "name": "失乐园",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "lethalDamage",
+      "usageLimit": {
+        "perGame": 1
+      },
+      "duration": "untilTurnEnd",
+      "ops": [
+        {
+          "op": "deferDamage",
+          "ref": "self"
+        }
+      ],
+      "notes": "限一次；本回合受到的伤害延后到本回合结束结算"
+    },
+    {
+      "id": "jixieshi/机械操纵",
+      "character": "机械师",
+      "name": "机械操纵",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "jixiewanou",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "jixieshi/胆怯",
+      "character": "机械师",
+      "name": "胆怯",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "modStatPer",
+          "ref": "self",
+          "stat": "atk",
+          "delta": -1,
+          "per": "woundedAllies"
+        }
+      ],
+      "notes": "己方每有一个受伤角色，自身攻击力-1（modStatPer 按数量动态重算）"
+    },
+    {
+      "id": "jixieshi/羸弱",
+      "character": "机械师",
+      "name": "羸弱",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "reflectMod",
+          "ref": "self",
+          "delta": -1
+        }
+      ],
+      "notes": "自身反伤伤害 -1"
+    },
+    {
+      "id": "zajiyanyuan/救援",
+      "character": "杂技演员",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 1
+        }
+      ]
+    },
+    {
+      "id": "zajiyanyuan/危险杂耍",
+      "character": "杂技演员",
+      "name": "危险杂耍",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "ranshaodan",
+          "count": 1
+        },
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "lengquedan",
+          "count": 1
+        },
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "niantudan",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "zajiyanyuan/即兴演出",
+      "character": "杂技演员",
+      "name": "即兴演出",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "rescue",
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "niantudan",
+          "count": 1
+        }
+      ],
+      "notes": "救援后获得粘土弹；开局起的第二个己方回合结束且存活时获得冷却弹；受到伤害后获得燃烧弹（第二个己方回合从开局计数，P7-E2-3 默认裁决）",
+      "parts": [
+        {
+          "trigger": "ownTurnEnd",
+          "condition": [
+            {
+              "turnEq": 2
+            }
+          ],
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "lengquedan",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "trigger": "damaged",
+          "ops": [
+            {
+              "op": "grantItem",
+              "ref": "self",
+              "item": "ranshaodan",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zajiyanyuan/三心二意",
+      "character": "杂技演员",
+      "name": "三心二意",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "restrictAttack",
+          "ref": "self",
+          "filter": {
+            "hpEq": 1
+          }
+        }
+      ]
+    }
+  ]
+}

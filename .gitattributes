@@ -1,0 +1,72 @@
+# ============================================================
+# 换行符策略
+# 仓库内源码/文档统一 LF；Windows 批处理必须 CRLF。
+# ============================================================
+* text=auto eol=lf
+
+# Windows 脚本必须是 CRLF，否则 cmd.exe 解析会出错
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+*.ps1   text eol=crlf
+
+# 源码与配置
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.js    text eol=lf
+*.jsx   text eol=lf
+*.mjs   text eol=lf
+*.cjs   text eol=lf
+*.json  text eol=lf
+*.jsonc text eol=lf
+*.css   text eol=lf
+*.html  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.sh    text eol=lf
+*.py    text eol=lf
+
+# 文档
+*.md    text eol=lf
+*.txt   text eol=lf
+
+# ============================================================
+# 二进制文件：禁止换行转换与文本合并
+# ============================================================
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.bmp   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.zip   binary
+*.7z    binary
+*.rar   binary
+*.gz    binary
+*.pdf   binary
+*.docx  binary
+*.doc   binary
+*.xlsx  binary
+*.xls   binary
+*.pptx  binary
+*.sqlite binary
+
+# ============================================================
+# 生成物：不做 diff 展示（若仍被跟踪也不污染评审）
+# ============================================================
+*.js.map   -diff
+*.css.map  -diff
+temp/build/** -text -diff
+
+# ============================================================
+# 统计口径：把 temp/ 的裁决文档视为文档而非源码
+# ============================================================
+temp/**/*.md linguist-documentation
+README.md    linguist-documentation
+TASK.md      linguist-documentation
+file_README.md linguist-documentation

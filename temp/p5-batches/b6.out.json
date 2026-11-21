@@ -1,0 +1,284 @@
+{
+  "batch": 6,
+  "skills": [
+    {
+      "id": "maenna/解放者",
+      "character": "玛恩纳（联动）",
+      "name": "解放者",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noReflect"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "unliberated"
+        }
+      ],
+      "notes": "未解放时不可攻击、攻击力恒为 0；攻击时不受到反伤"
+    },
+    {
+      "id": "maenna/无动于衷",
+      "character": "玛恩纳（联动）",
+      "name": "无动于衷",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "untargetable",
+          "ref": "allAllies",
+          "by": "enemySkill"
+        },
+        {
+          "op": "untargetable",
+          "ref": "allAllies",
+          "by": "enemyItem"
+        }
+      ]
+    },
+    {
+      "id": "maenna/游侠",
+      "character": "玛恩纳（联动）",
+      "name": "游侠",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "rescued",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noMaxHpHalve"
+        }
+      ]
+    },
+    {
+      "id": "maenna/未声张的怒火",
+      "character": "玛恩纳（联动）",
+      "name": "未声张的怒火",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "immuneToSeal"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noCannotAttack"
+        }
+      ],
+      "notes": "不会获得不可攻击效果"
+    },
+    {
+      "id": "maenna/未宽解的悲哀",
+      "character": "玛恩纳（联动）",
+      "name": "未宽解的悲哀",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "turnStart",
+      "ops": [
+        {
+          "op": "liberate",
+          "ref": "self",
+          "amount": 0,
+          "delta": 0,
+          "when": "ownTurnStart",
+          "if": "gloryLastTurn"
+        },
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 1,
+          "when": "ownTurnStart",
+          "if": "gloryLastTurn"
+        }
+      ],
+      "notes": "上回合使用过「未照耀的荣光」则在本回合开始解放并攻击 +1",
+      "duration": "untilOwnTurnEnd"
+    },
+    {
+      "id": "maenna/未照耀的荣光",
+      "character": "玛恩纳（联动）",
+      "name": "未照耀的荣光",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "duration": "untilOwnTurnEnd",
+      "ops": [
+        {
+          "op": "liberate",
+          "ref": "self",
+          "amount": 2,
+          "delta": 1
+        },
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 3
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "rampDownArm"
+        }
+      ],
+      "notes": "解放 + 攻击 +3 + 相邻溅射 2 + 伤害下限 1；本回合每攻击一次，后续伤害 -1（可叠加）"
+    },
+    {
+      "id": "leide/59区废墟",
+      "character": "雷德（联动）",
+      "name": "59区废墟",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "cannotBeRescued"
+        }
+      ],
+      "notes": "不可被救援"
+    },
+    {
+      "id": "leide/“复仇者”",
+      "character": "雷德（联动）",
+      "name": "“复仇者”",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 2
+        }
+      ],
+      "notes": "血量小于3时攻击力+2（动态条件被动，每次动作后按条件重算）",
+      "condition": [
+        {
+          "hpLt": 3
+        }
+      ]
+    },
+    {
+      "id": "leide/整合运动",
+      "character": "雷德（联动）",
+      "name": "整合运动",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "selfDeath",
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [
+        {
+          "op": "revive",
+          "ref": "self",
+          "hp": 2
+        },
+        {
+          "op": "immune",
+          "ref": "self",
+          "scope": "damage",
+          "uses": 1
+        }
+      ],
+      "notes": "「限一次」作用域未裁决，暂按每局一次"
+    },
+    {
+      "id": "niuzai/套索技艺",
+      "character": "牛仔",
+      "name": "套索技艺",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "holdDying",
+          "ref": "target",
+          "duration": "permanent"
+        },
+        {
+          "op": "sealSkills",
+          "ref": "target",
+          "duration": "permanent"
+        },
+        {
+          "op": "untargetable",
+          "ref": "target",
+          "by": "all",
+          "duration": "permanent"
+        },
+        {
+          "op": "deferredRescue",
+          "ref": "target"
+        }
+      ],
+      "notes": "保持濒死、封技能、不可为目标；仅牛仔本人可救（其他救援来源被 cannotBeRescued 挡住），牛仔下个己方回合开始若存活则不扣血救援"
+    },
+    {
+      "id": "niuzai/保护欲",
+      "character": "牛仔",
+      "name": "保护欲",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "enteringDying",
+      "ops": [
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "niuzai/马背英雄",
+      "character": "牛仔",
+      "name": "马背英雄",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "lethalDamage",
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "lethalSave"
+        }
+      ],
+      "notes": "有临时血量时致命伤害保留 1 血"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "idd",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,10 +10,12 @@
     "test": "node node_modules/typescript/bin/tsc -p tsconfig.build.json && node test/index.mjs",
     "typecheck": "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json",
     "check": "node temp/check-extract.mjs",
+    "check:effects": "node scripts/validate-effects.mjs",
+    "coverage:effects": "node scripts/coverage-effects.mjs",
     "play": "node node_modules/typescript/bin/tsc -p tsconfig.build.json && node scripts/play.mjs",
     "ui:build": "node node_modules/typescript/bin/tsc -p tsconfig.ui.json && node scripts/build-ui.mjs",
     "ui:check": "node scripts/check-ui.mjs",
-    "verify": "npm run typecheck && npm run test && npm run ui:build && npm run ui:check"
+    "verify": "npm run typecheck && npm run test && npm run check:effects && npm run ui:build && npm run ui:check"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -28,4 +30,3 @@
     "vitest": "^1.6.0"
   }
 }
-

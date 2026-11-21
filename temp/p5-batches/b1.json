@@ -1,0 +1,253 @@
+{
+  "batch": 1,
+  "characters": [
+    {
+      "id": "xingyuner",
+      "name": "幸运儿",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 1,
+      "cost": 1000,
+      "skills": [
+        {
+          "id": "xingyuner/庄园老友",
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "xingyuner/幸运包裹",
+          "name": "幸运包裹",
+          "type": "active",
+          "text": "幸运包裹（限一次）：获得一个指定道具。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "tiaoxiangshi",
+      "name": "调香师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "cost": 1000,
+      "skills": [
+        {
+          "id": "tiaoxiangshi/调香",
+          "name": "调香",
+          "type": "battlecry",
+          "text": "调香：战吼：获得三个“忘忧之香”。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "xianzhi",
+      "name": "先知",
+      "rarity": "limited",
+      "atk": 3,
+      "hp": 3,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "xianzhi/役鸟守护",
+          "name": "役鸟守护",
+          "type": "charge",
+          "text": "役鸟守护（每两回合充能一次：1/5，第二回合充能第一次）：当有角色将要受到伤害时，可选择免疫此次伤害，先知攻击力减一。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "yongbing",
+      "name": "佣兵",
+      "rarity": "limited",
+      "atk": 1,
+      "hp": 6,
+      "cost": 5000,
+      "skills": [
+        {
+          "id": "yongbing/自我救援",
+          "name": "自我救援",
+          "type": "passive",
+          "text": "自我救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yongbing/坚强",
+          "name": "坚强",
+          "type": "passive",
+          "text": "坚强：将要受到伤害时，改为获得等量标记。己方回合结束时，自动尽可能多地减少标记（最多3个），使自身扣除等同于减少的标记数的血量。自身进入濒死状态后将标记清零。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yongbing/钢铁冲刺",
+          "name": "钢铁冲刺",
+          "type": "battlecry",
+          "text": "钢铁冲刺：战吼：获得三个“护腕”。每回合对佣兵使用的第一个“护腕”不会消耗花费。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yongbing/战争后遗症",
+          "name": "战争后遗症",
+          "type": "passive",
+          "text": "战争后遗症：受伤时，攻击力减一。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "shoumuren",
+      "name": "守墓人",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 3,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "shoumuren/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "shoumuren/安心",
+          "name": "安心",
+          "type": "passive",
+          "text": "安心：救援不扣血，限一次。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "dafu",
+      "name": "大副",
+      "rarity": "limited",
+      "atk": 1,
+      "hp": 4,
+      "cost": 5000,
+      "skills": [
+        {
+          "id": "dafu/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "dafu/消失",
+          "name": "消失",
+          "type": "passive",
+          "text": "消失：受到两点及以上的伤害时，受到的伤害减一。本特质不会因为封技能而失效。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "dafu/海神怀表",
+          "name": "海神怀表",
+          "type": "battlecry",
+          "text": "海神怀表：战吼：获得两个“怀表”。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "dafu/失乐园",
+          "name": "失乐园",
+          "type": "passive",
+          "text": "失乐园：限一次，受到致命伤害时，本回合受到的所有伤害转移到本回合结束时结算。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "jixieshi",
+      "name": "机械师",
+      "rarity": "epic",
+      "atk": 2,
+      "hp": 1,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "jixieshi/机械操纵",
+          "name": "机械操纵",
+          "type": "battlecry",
+          "text": "机械操纵：战吼：获得两个“机械玩偶”。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jixieshi/胆怯",
+          "name": "胆怯",
+          "type": "passive",
+          "text": "胆怯：场上每有一个己方角色受伤（血量小于原最大血量），攻击力减一。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jixieshi/羸弱",
+          "name": "羸弱",
+          "type": "passive",
+          "text": "羸弱：自身反伤造成的伤害减一。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "zajiyanyuan",
+      "name": "杂技演员",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 4,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "zajiyanyuan/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援，限一次。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "zajiyanyuan/危险杂耍",
+          "name": "危险杂耍",
+          "type": "battlecry",
+          "text": "危险杂耍：战吼：获得“燃烧弹”、“冷却弹”、“粘土弹”各一个。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "zajiyanyuan/即兴演出",
+          "name": "即兴演出",
+          "type": "passive",
+          "text": "即兴演出：杂技演员救援后，获得一个“粘土弹”。第二个己方回合结束时，若杂技演员存活，获得一个“冷却弹”。杂技演员受到伤害后，获得一个“燃烧弹”。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "zajiyanyuan/三心二意",
+          "name": "三心二意",
+          "type": "passive",
+          "text": "三心二意：无法攻击血量为1的角色。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    }
+  ]
+}

@@ -135,6 +135,8 @@ export interface BpState {
   stepIndex: number;
   /** 当前步已提交的名字。 */
   stepChars: string[];
+  /** P7-G：需要「确认」才进入下一步（界面用）；默认 false 保持旧行为（选满自动进下一步）。 */
+  manualConfirm: boolean;
   players: Record<PlayerKey, BpPlayer>;
   finished: boolean;
   log: BpLogEntry[];
@@ -145,6 +147,8 @@ export interface CreateBpOptions {
   roundIndex?: number;
   firstPlayer?: PlayerKey;
   globalBans?: Partial<Record<PlayerKey, string[]>>;
+  /** P7-G：每步需要按「确认」才前进（界面默认开启）。 */
+  manualConfirm?: boolean;
 }
 
 const emptyPlayer = (key: PlayerKey, globalBans: string[] = []): BpPlayer => ({
@@ -169,6 +173,7 @@ export function createBp(opts: CreateBpOptions): BpState {
     firstPlayer,
     stepIndex: 0,
     stepChars: [],
+    manualConfirm: opts.manualConfirm ?? false,
     players: {
       p1: emptyPlayer('p1', carry.p1),
       p2: emptyPlayer('p2', carry.p2),
@@ -224,6 +229,10 @@ export interface BpChoices {
   chars: BpCharacter[];
   /** 仅 atMost 步为 true：可以提前结束本轮选择（允许 0–3 人，Q35/Q19）。 */
   canEndStep: boolean;
+  /** P7-G：本步还能撤回上一次选择。 */
+  canUndo: boolean;
+  /** P7-G：本步可以按「确认」进入下一步。 */
+  canConfirm: boolean;
 }
 
 /** 某个玩家不能选某个名字的原因；可选时返回 null。界面用它做置灰提示。 */
@@ -237,7 +246,8 @@ export function blockReason(
   const step = currentStep(state);
   if (!step) return 'BP 已结束';
   if (action === 'ban') {
-    // 只禁止自己重复 BAN 同一个名字；对方已 BAN 的名字仍然可以 BAN（用户 2026-11-06 明确）。
+    // 只禁止自己重复 BAN 同一个名字；对方已 BAN 的名字仍然可以 BAN
+    // （用户 2026-11-06 明确，2026-11-21 复议维持：双方可各自 BAN 同一角色）。
     if (state.players[player].bans.includes(ch.name)) return '自己本局已 BAN 过该角色';
     return null;
   }
@@ -271,6 +281,8 @@ export function legalBpChoices(state: BpState, catalog: BpCharacter[]): BpChoice
     remaining: step.count - state.stepChars.length,
     chars,
     canEndStep: step.atMost && !state.finished,
+    canUndo: canUndoBp(state),
+    canConfirm: canConfirmBpStep(state),
   };
 }
 
@@ -295,13 +307,61 @@ function finalizeStep(state: BpState, player: PlayerKey, step: BpStep): BpState 
 export type BpAction =
   | { type: 'ban'; charId: string }
   | { type: 'pick'; charId: string }
-  | { type: 'endStep' };
+  | { type: 'endStep' }
+  /** P7-G：撤回本步的上一次选择（确认后不可撤回）。 */
+  | { type: 'undo' }
+  /** P7-G：确认本步，进入下一步。 */
+  | { type: 'confirmStep' };
+
+/** 当前步还有没有可撤回的选择。 */
+export function canUndoBp(state: BpState): boolean {
+  return !state.finished && state.stepChars.length > 0;
+}
+
+/** 当前步能不能按「确认」：选满（atMost 步可少于上限）。 */
+export function canConfirmBpStep(state: BpState): boolean {
+  const step = currentStep(state);
+  if (!step) return false;
+  return step.atMost ? true : state.stepChars.length >= step.count;
+}
 
 export function applyBp(state: BpState, action: BpAction, catalog: BpCharacter[]): BpState {
   if (state.finished) throw new Error('BP 已结束');
   const step = currentStep(state);
   if (!step) throw new Error('BP 已结束');
   const player = stepActor(state);
+
+  // P7-G：确认本步（确认后本步锁定，不可再撤回）。
+  if (action.type === 'confirmStep') {
+    if (!canConfirmBpStep(state)) throw new Error(`本步必须选满 ${step.count} 个`);
+    return finalizeStep(state, player, step);
+  }
+
+  // P7-G：撤回本步的上一次选择（只退选择本身，不跨越已确认的步骤）。
+  if (action.type === 'undo') {
+    if (!state.stepChars.length) throw new Error('本步没有可撤回的选择');
+    const name = state.stepChars[state.stepChars.length - 1];
+    const players = { ...state.players };
+    const me = players[player];
+    if (step.action === 'ban') {
+      const idx = me.bans.lastIndexOf(name);
+      const bans = me.bans.slice();
+      if (idx >= 0) bans.splice(idx, 1);
+      players[player] = { ...me, bans };
+    } else {
+      const idx = me.picks.lastIndexOf(name);
+      const picks = me.picks.slice();
+      if (idx >= 0) picks.splice(idx, 1);
+      const ch = catalog.find((c) => c.name === name);
+      players[player] = { ...me, picks, spent: Math.max(0, me.spent - (ch?.cost ?? 0)) };
+    }
+    return {
+      ...state,
+      players,
+      stepChars: state.stepChars.slice(0, -1),
+      log: state.log.slice(0, -1),
+    };
+  }
 
   if (action.type === 'endStep') {
     if (!step.atMost) throw new Error(`本步必须选满 ${step.count} 个`);
@@ -311,7 +371,9 @@ export function applyBp(state: BpState, action: BpAction, catalog: BpCharacter[]
   if (step.action !== action.type) {
     throw new Error(step.action === 'ban' ? '当前是 BAN 阶段' : '当前是选人阶段');
   }
-  if (step.atMost && state.stepChars.length >= step.count) {
+  // BAN 步不是 atMost：选满后必须由「确认」推进，不能靠继续选来溢出名额
+  // （manualConfirm 打开时曾因此无限 BAN，并溢到下一组 BAN 的槽位）。
+  if (state.stepChars.length >= step.count) {
     throw new Error('本步已选满');
   }
 
@@ -335,7 +397,8 @@ export function applyBp(state: BpState, action: BpAction, catalog: BpCharacter[]
     { round: state.roundIndex + 1, step: step.index + 1, player, action: step.action, name: ch.name },
   ];
   const next: BpState = { ...state, players, stepChars: nextStepChars, log };
-  if (nextStepChars.length >= step.count) return finalizeStep(next, player, step);
+  // P7-G：manualConfirm 时选满也不自动前进，等玩家按「确认」。
+  if (!state.manualConfirm && nextStepChars.length >= step.count) return finalizeStep(next, player, step);
   return next;
 }
 
@@ -364,13 +427,13 @@ export interface BpSeries {
   champion: PlayerKey | null;
 }
 
-export function createSeries(mode: BpMode): BpSeries {
+export function createSeries(mode: BpMode, manualConfirm = false): BpSeries {
   return {
     mode,
     roundIndex: 0,
     wins: { p1: 0, p2: 0 },
     globalBans: { p1: [], p2: [] },
-    current: createBp({ mode, roundIndex: 0 }),
+    current: createBp({ mode, roundIndex: 0, manualConfirm }),
     champion: null,
   };
 }
@@ -401,6 +464,7 @@ export function advanceSeries(series: BpSeries): BpSeries {
       roundIndex,
       firstPlayer: roundIndex % 2 === 0 ? 'p1' : 'p2',
       globalBans: series.globalBans,
+      manualConfirm: series.current.manualConfirm,
     }),
   };
 }

@@ -1,13 +1,101 @@
-# Python 虚拟环境及缓存
+# ============================================================
+# 依赖与包管理器缓存
+# ============================================================
+node_modules/
+.npm-cache/
+.pnpm-store/
+.yarn/
+bower_components/
+
+# 包管理器日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+
+# ============================================================
+# 构建产物（可随时用 npm run ui:build 重新生成，不入库）
+# ============================================================
+temp/build/
+temp/build/**
+temp/**/*.tsbuildinfo
+
+# ============================================================
+# 运行期产物与日志
+# ============================================================
+temp/logs/
+*.log
+*.pid
+
+# ============================================================
+# temp/ 下的一次性脚本、试验备份、探针输出
+# 说明：temp/decisions.md、temp/handoff*.md、temp/extract/、
+#       temp/p5-*.md、temp/p7-*.md、temp/plan.md 等「文档类」
+#       仍应入库，作为裁决与交接记录，不要忽略。
+# ============================================================
+temp/probe-*.mjs
+temp/repair*.mjs
+temp/repair*.py
+temp/effects.*.mjs
+temp/effects.*.txt
+temp/corrupted.backup.mjs
+temp/harvested-effects.mjs
+temp/recovered-effects.mjs
+temp/harvest.mjs
+temp/paint*.mjs
+temp/replay*.mjs
+temp/dbg*.txt
+temp/dbg.mjs
+temp/report*.txt
+temp/enc-probe.txt
+temp/*.tmp
+temp/*.bak
+temp/*.orig
+temp/fillgaps*.mjs
+temp/gap.mjs
+temp/rename.mjs
+temp/move-block.cjs
+temp/patch*.cjs
+temp/patch*.mjs
+temp/patch*.py
+temp/peek.mjs
+temp/show-record.mjs
+temp/dump-*.mjs
+temp/list-*.mjs
+temp/scan-sessions.mjs
+temp/check-extract.mjs
+temp/extract-cost.mjs
+
+# 沙箱/ACL 自检报告（本机环境诊断产物，与项目无关）
+_acl-report/
+
+# ============================================================
+# Python（仓库根目录的历史临时脚本）
+# ============================================================
 venv/
 .venv/
 __pycache__/
 *.pyc
+*.pyo
+.pytest_cache/
 
-# Node.js 依赖
-node_modules/
-
-# 常见编辑器配置
+# ============================================================
+# 编辑器与系统
+# ============================================================
 .idea/
 .vscode/
+*.code-workspace
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# 杂项
+# ============================================================
+*.zip
+*.7z
+*.rar
+*.tar.gz
+coverage/
+.nyc_output/

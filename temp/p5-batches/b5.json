@@ -1,0 +1,269 @@
+{
+  "batch": 5,
+  "characters": [
+    {
+      "id": "feixingjia",
+      "name": "飞行家",
+      "rarity": "limited",
+      "atk": 2,
+      "hp": 2,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "feixingjia/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援；救援时，可选择消耗一个飞行器，使本次救援无伤。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "feixingjia/飞行器",
+          "name": "飞行器",
+          "type": "active",
+          "text": "飞行器（耐久度：3）：己方回合结束时，血量加一（本次血量上限增加会在自己被救援时计入初始血量上限）。",
+          "durability": 3,
+          "cost": null
+        },
+        {
+          "id": "feixingjia/悬停",
+          "name": "悬停",
+          "type": "passive",
+          "text": "悬停：每局游戏，免疫受到的第一次伤害，并且立即触发一次“飞行器”。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "feixingjia/特发性震颤",
+          "name": "特发性震颤",
+          "type": "passive",
+          "text": "特发性震颤：若“飞行家”为己方唯一一个可以救援的角色，则攻击力减一，获得自我救援。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "muoushi",
+      "name": "木偶师",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 4,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "muoushi/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "muoushi/“路易”",
+          "name": "“路易”",
+          "type": "passive",
+          "text": "“路易”：本体血量将要减少时，自动扣一点本体血量，获得三点临时血量，持续到本回合结束。若因救援导致使用本技能时，只获得两点临时血量。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "muoushi/血肉无用",
+          "name": "血肉无用",
+          "type": "passive",
+          "text": "血肉无用：不可回复血量。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "jizhe",
+      "name": "记者",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "jizhe/救援",
+          "name": "救援",
+          "type": "passive",
+          "text": "救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jizhe/独家新闻",
+          "name": "独家新闻",
+          "type": "cooldown",
+          "text": "独家新闻（CD：0）：抉择：召唤一个“牵制幻影”（限三次）。 或 召唤一个“救援幻影”（限一次）。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jizhe/“勇敢”",
+          "name": "“勇敢”",
+          "type": "passive",
+          "text": "“勇敢”：被救援后，不会减少血量上限。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "jizhe/观测视角",
+          "name": "观测视角",
+          "type": "passive",
+          "text": "观测视角：幻影受攻击死后，记者获得一点临时血量，持续至下个友方回合结束。记者存活时，可以主动使幻影死亡。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "wunv",
+      "name": "舞女",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "wunv/二重奏",
+          "name": "二重奏",
+          "type": "battlecry",
+          "text": "二重奏：战吼：获得三个“八音盒”。“舞女”使用八音盒后，血量+1，且不会使增益消失。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "wunv/杂技",
+          "name": "杂技",
+          "type": "battlecry",
+          "text": "杂技：战吼：获得一点临时血量，持续至第一回合结束。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "yisheng",
+      "name": "医生",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 2,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "yisheng/庄园老友",
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yisheng/医药专精",
+          "name": "医药专精",
+          "type": "battlecry",
+          "text": "医药专精：战吼：获得三个“镇静剂”。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yisheng/医术高超",
+          "name": "医术高超",
+          "type": "passive",
+          "text": "医术高超：回合结束时，回满血。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "zuoqujia",
+      "name": "作曲家",
+      "rarity": "epic",
+      "atk": 1,
+      "hp": 2,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "zuoqujia/组曲",
+          "name": "组曲",
+          "type": "passive",
+          "text": "组曲：每次攻击后，攻击力+1，获得一点临时血量，持续至下个己方回合开始。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "zuoqujia/调律",
+          "name": "调律",
+          "type": "cooldown",
+          "text": "调律（CD：1）：获得两点临时血量，持续至己方回合结束。本回合可再次攻击，但是不会触发“组曲”的加攻击力效果。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "zuoqujia/静音",
+          "name": "静音",
+          "type": "passive",
+          "text": "静音：不能成为敌方角色技能的目标。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "yuanding",
+      "name": "园丁",
+      "rarity": "normal",
+      "atk": 2,
+      "hp": 4,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "yuanding/庄园老友",
+          "name": "庄园老友",
+          "type": "passive",
+          "text": "庄园老友。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yuanding/守护",
+          "name": "守护",
+          "type": "battlecry",
+          "text": "守护：战吼：获得一个可抵挡一次伤害的护盾。回合开始时，若上回合未攻击，则获得一个可抵挡一次伤害的护盾。护盾持续至回合结束。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "yuanding/巧手匠心",
+          "name": "巧手匠心",
+          "type": "cooldown",
+          "text": "巧手匠心（CD：0）：有友方角色受到致命伤害时，可使其血量不低于1，将溢出的伤害双倍转移给园丁。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "kunchongxuezhe",
+      "name": "昆虫学者",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "cost": 3000,
+      "skills": [
+        {
+          "id": "kunchongxuezhe/昆虫研究",
+          "name": "昆虫研究",
+          "type": "active",
+          "text": "昆虫研究（耐久度：5）：汇聚虫群（消耗耐久度：2）：召唤“虫群”。",
+          "durability": 5,
+          "cost": null
+        }
+      ]
+    }
+  ]
+}

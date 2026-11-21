@@ -51,6 +51,8 @@ while (!state.winner && guard++ < 40) {
     targets.sort((a, b) => a.hp - b.hp);
     const before = state;
     state = applyAction(state, { type: 'attack', attackerId: actor.id, targetId: targets[0].id }).state;
+    // P7-2（X5）：打断窗口一律选「不打断」，让脚本对局能继续。
+    if (state.pendingInterrupt) state = applyAction(state, { type: 'resolveInterrupt' }).state;
     for (const e of state.events.slice(before.events.length)) {
       if (e.type === 'attack') record(`T${state.clock.bigTurn}-${side} 攻击 ${e.attacker}->${e.target} 伤害${e.damage} 剩余${e.hpAfter}`);
       if (e.type === 'reflect') record(`T${state.clock.bigTurn}-${side} 反伤 ${e.attacker}->${e.target} 伤害${e.damage} 剩余${e.hpAfter}`);

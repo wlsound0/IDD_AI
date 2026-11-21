@@ -1,0 +1,131 @@
+{
+  "batch": 6,
+  "characters": [
+    {
+      "id": "maenna",
+      "name": "玛恩纳（联动）",
+      "rarity": "limited",
+      "atk": 0,
+      "hp": 5,
+      "cost": 5000,
+      "skills": [
+        {
+          "id": "maenna/解放者",
+          "name": "解放者",
+          "type": "passive",
+          "text": "解放者：在未解放时不可攻击，攻击力始终为0。攻击时不受到反伤。解放期间，每回合可攻击两次。解放效果将在本个友方回合结束时消失，解放技能的效果也将一并消失。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "maenna/无动于衷",
+          "name": "无动于衷",
+          "type": "passive",
+          "text": "无动于衷：所有友方单位不可成为敌方技能或道具的目标。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "maenna/游侠",
+          "name": "游侠",
+          "type": "passive",
+          "text": "游侠： 被救援后，不会减少血量上限。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "maenna/未声张的怒火",
+          "name": "未声张的怒火",
+          "type": "passive",
+          "text": "未声张的怒火：玛恩纳不会被封技能或获得不可攻击效果。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "maenna/未宽解的悲哀",
+          "name": "未宽解的悲哀",
+          "type": "passive",
+          "text": "未宽解的悲哀：回合开始时（0），若上个回合使用过“未照耀的荣光”，则解放，攻击力+1。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "maenna/未照耀的荣光",
+          "name": "未照耀的荣光",
+          "type": "cooldown",
+          "text": "未照耀的荣光（初始CD：1，之后CD：2）：解放，攻击力+3，攻击时同时对被攻击角色相邻的两个角色造成两点伤害。本回合己方玛恩纳的每进行一次攻击，造成的所有伤害-1。技能期间，玛恩纳造成的所有伤害不会低于1。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "leide",
+      "name": "雷德（联动）",
+      "rarity": "epic",
+      "atk": 2,
+      "hp": 3,
+      "cost": 4000,
+      "skills": [
+        {
+          "id": "leide/59区废墟",
+          "name": "59区废墟",
+          "type": "passive",
+          "text": "59区废墟：不可被救援。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "leide/“复仇者”",
+          "name": "“复仇者”",
+          "type": "passive",
+          "text": "“复仇者”：血量小于3时，攻击力加二。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "leide/整合运动",
+          "name": "整合运动",
+          "type": "passive",
+          "text": "整合运动：限一次，死亡后，复活，复活时血量为2，且免疫下次受到的伤害。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    },
+    {
+      "id": "niuzai",
+      "name": "牛仔",
+      "rarity": "normal",
+      "atk": 1,
+      "hp": 3,
+      "cost": 2000,
+      "skills": [
+        {
+          "id": "niuzai/套索技艺",
+          "name": "套索技艺",
+          "type": "cooldown",
+          "text": "套索技艺（耐久度：3，CD：0）：有角色进入濒死状态时，使其保持该状态，期间其所有技能、效果失效，不会成为攻击、技能、道具的目标，不会受到任何效果影响，且不会被救援，但技能CD、充能正常计算，直到下个友方回合开始，若该牛仔存活，则将其救援，且本次救援牛仔不扣血。",
+          "durability": 3,
+          "cost": null
+        },
+        {
+          "id": "niuzai/保护欲",
+          "name": "保护欲",
+          "type": "passive",
+          "text": "保护欲：有角色进入濒死状态时，获得一点临时血量。",
+          "durability": null,
+          "cost": null
+        },
+        {
+          "id": "niuzai/马背英雄",
+          "name": "马背英雄",
+          "type": "passive",
+          "text": "马背英雄：若在有临时血量的状态下受到致命伤害，则使血量不低于1。",
+          "durability": null,
+          "cost": null
+        }
+      ]
+    }
+  ]
+}

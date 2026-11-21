@@ -27,7 +27,12 @@ writeFileSync(q('core.js'), coreSrc, 'utf8');
 // 2) 内联数据：file:// 下 fetch 会被 CORS 拦，所以把 JSON 变成普通脚本
 const chars = JSON.parse(requireFile(p('data', 'characters.json'), 'characters.json') || '{"characters":[]}');
 const items = JSON.parse(requireFile(p('data', 'items.json'), 'items.json') || '{"items":[]}');
-const payload = { characters: chars.characters ?? [], items: items.items ?? [] };
+const effects = JSON.parse(requireFile(p('data', 'effects.json'), 'effects.json') || '{"skills":[],"items":[]}');
+const payload = {
+  characters: chars.characters ?? [],
+  items: items.items ?? [],
+  effects: { skills: effects.skills ?? [], items: effects.items ?? [] },
+};
 writeFileSync(q('data.js'), 'window.IDD_DATA = ' + JSON.stringify(payload) + ';\n', 'utf8');
 
 // 3) 静态文件
@@ -52,6 +57,8 @@ if (existsSync(reactSrc) && existsSync(reactDomSrc)) {
 if ((payload.characters ?? []).length < 40) problems.push(`角色数据只有 ${payload.characters.length} 条，疑似抽取缺失`);
 if ((payload.items ?? []).length < 14) problems.push(`道具数据只有 ${payload.items.length} 条，疑似抽取缺失`);
 if (!coreSrc.includes('legalAttackTargets')) problems.push('core.js 里没有 legalAttackTargets，界面无法限制攻击目标');
+if (!coreSrc.includes('buildUnitSkills')) problems.push('core.js 里没有 buildUnitSkills，技能数据接不上');
+if (!(payload.effects.skills ?? []).length) problems.push('effects.json 缺失或为空，技能无法生效');
 if (!readFileSync(q('app.js'), 'utf8').includes('window.IDDApp')) problems.push('app.js 未导出 window.IDDApp');
 
 if (problems.length) {

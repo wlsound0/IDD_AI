@@ -1,0 +1,573 @@
+{
+  "batch": 3,
+  "skills": [
+    {
+      "id": "binghuan/救援",
+      "character": "病患",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 1
+        }
+      ],
+      "notes": "原文只写名称，按基础救援扣1血"
+    },
+    {
+      "id": "binghuan/钩爪逃生",
+      "character": "病患",
+      "name": "钩爪逃生",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "self"
+      },
+      "usageLimit": {
+        "perGame": 3
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "binghuan/牵绊",
+      "character": "病患",
+      "name": "牵绊",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "target": {
+        "mode": "self"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "hp",
+          "delta": 1
+        }
+      ],
+      "notes": "战吼：仅当「心理学家」在场时血量+1（条件在 battlecry 触发时求值）",
+      "condition": [
+        {
+          "allyName": "心理学家"
+        }
+      ]
+    },
+    {
+      "id": "rulianshi/入殓",
+      "character": "入殓师",
+      "name": "入殓",
+      "type": "charge",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "allyUnit"
+      },
+      "duration": "permanent",
+      "ops": [
+        {
+          "op": "mark",
+          "ref": "target",
+          "key": "furongfansheng",
+          "delta": 1
+        },
+        {
+          "op": "grantTransferMark",
+          "ref": "self"
+        }
+      ],
+      "notes": "战吼开局自身持有标记；施放=把己方已有的标记转移到目标（先撤后上），上限 = 战场上己方入殓师数量，同一角色不可持有两个",
+      "battlecryOps": [
+        {
+          "op": "mark",
+          "ref": "self",
+          "key": "furongfansheng",
+          "delta": 1
+        }
+      ]
+    },
+    {
+      "id": "rulianshi/附容返生",
+      "character": "入殓师",
+      "name": "附容返生",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "rescued",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 0
+        },
+        {
+          "op": "shield",
+          "ref": "self",
+          "amount": 1,
+          "duration": "untilNextOwnTurnEnd"
+        },
+        {
+          "op": "deferDamage",
+          "ref": "self",
+          "duration": "untilNextOwnTurnEnd"
+        }
+      ],
+      "notes": "救援规则常驻；护盾与延迟持续至下个友方回合结束"
+    },
+    {
+      "id": "tiaojiushi/多夫林底酒",
+      "character": "调酒师",
+      "name": "多夫林底酒",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "damaged",
+      "target": {
+        "mode": "self"
+      },
+      "usageLimit": {
+        "perGame": 1
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "invulnerable",
+          "ref": "self"
+        }
+      ]
+    },
+    {
+      "id": "tiaojiushi/烈性多夫林",
+      "character": "调酒师",
+      "name": "烈性多夫林",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "allyUnit",
+        "filter": {
+          "wounded": true
+        }
+      },
+      "usageLimit": {
+        "perGame": 2
+      },
+      "duration": "untilNextOwnTurnStart",
+      "ops": [
+        {
+          "op": "heal",
+          "ref": "target",
+          "amount": "full"
+        },
+        {
+          "op": "modStat",
+          "ref": "target",
+          "stat": "atk",
+          "delta": -1
+        }
+      ]
+    },
+    {
+      "id": "yeren/救援",
+      "character": "野人",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 1
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noSkillSeal"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "mustUseBodyForRescue"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "sealedRescueCost",
+          "value": 2
+        }
+      ],
+      "notes": "只扣 1 血且必扣本体；被封技能后扣 2 血（D17）"
+    },
+    {
+      "id": "yeren/野性伙伴",
+      "character": "野人",
+      "name": "野性伙伴",
+      "type": "cooldown",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "tempHp",
+          "ref": "self",
+          "amount": 2,
+          "group": "tempHp:wildPartner"
+        },
+        {
+          "op": "modStat",
+          "ref": "self",
+          "stat": "atk",
+          "delta": 1,
+          "group": "tempHp:wildPartner"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noReflect",
+          "group": "tempHp:wildPartner"
+        }
+      ],
+      "notes": "获得 2 点临时血量；首次使用加攻/不反伤持续两回合，之后持续一回合；临时血量扣完时整组结束（时长口径见 temp/decisions.md P7-E2-2）",
+      "durationByUse": {
+        "first": "turns:2",
+        "later": "turns:1"
+      }
+    },
+    {
+      "id": "jisi/门之钥",
+      "character": "祭司",
+      "name": "门之钥",
+      "type": "charge",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter",
+        "filter": {
+          "atkNotZero": true
+        }
+      },
+      "ops": [
+        {
+          "op": "swapStat",
+          "refA": "target",
+          "statA": "hp",
+          "refB": "target",
+          "statB": "atk"
+        }
+      ],
+      "notes": "交换攻击力与血量上限；临时值不参与；攻击力 0 不可选"
+    },
+    {
+      "id": "jisi/羸弱",
+      "character": "祭司",
+      "name": "羸弱",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "reflectMod",
+          "ref": "self",
+          "delta": -1
+        }
+      ],
+      "notes": "仅反伤造成的伤害 -1（reflectMod）"
+    },
+    {
+      "id": "jisi/超长通道",
+      "character": "祭司",
+      "name": "超长通道",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "anyCharacter"
+      },
+      "usageLimit": {
+        "perGame": 1
+      },
+      "ops": [
+        {
+          "op": "heal",
+          "ref": "target",
+          "amount": 1
+        },
+        {
+          "op": "heal",
+          "ref": "self",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "qianfeng/救援",
+      "character": "前锋",
+      "name": "救援",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "grantRescue",
+          "ref": "self"
+        },
+        {
+          "op": "rescueRule",
+          "ref": "self",
+          "hpCost": 1
+        }
+      ],
+      "notes": "具备救援能力；救援只扣 1 血，可扣临时血（QA-23）"
+    },
+    {
+      "id": "qianfeng/机械盲",
+      "character": "前锋",
+      "name": "机械盲",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "cannotAttack"
+        }
+      ]
+    },
+    {
+      "id": "qianfeng/运动天赋",
+      "character": "前锋",
+      "name": "运动天赋",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "untargetable",
+          "ref": "self",
+          "by": "enemySkill"
+        },
+        {
+          "op": "untargetable",
+          "ref": "self",
+          "by": "enemyItem"
+        }
+      ]
+    },
+    {
+      "id": "qianfeng/橄榄球员",
+      "character": "前锋",
+      "name": "橄榄球员",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "ganlanqiu",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "cishanjia/狡猾",
+      "character": "慈善家",
+      "name": "狡猾",
+      "type": "battlecry",
+      "impl": "full",
+      "manual": false,
+      "trigger": "battlecry",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "grantItem",
+          "ref": "self",
+          "item": "shoudiantong",
+          "count": 2
+        },
+        {
+          "op": "flag",
+          "ref": "victim",
+          "key": "cannotAttack",
+          "duration": "turns:1"
+        }
+      ],
+      "notes": "后半在被攻击者受击时生效，「下回合」记1回合"
+    },
+    {
+      "id": "gudongshang/旧伤",
+      "character": "古董商",
+      "name": "旧伤",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "restrictAttack",
+          "ref": "self",
+          "filter": {
+            "hpEq": 1
+          }
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noReflect"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noReflectVsHp1"
+        }
+      ],
+      "notes": "对血量为 1 的攻击者不反伤"
+    },
+    {
+      "id": "gudongshang/藏锋",
+      "character": "古董商",
+      "name": "藏锋",
+      "type": "active",
+      "impl": "full",
+      "manual": true,
+      "trigger": "manual",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [],
+      "notes": "转式/扫式二选一（耐久 5：转式耗 1、扫式耗 3，P5-35）；扫式的「下次攻击 +1（作用于伤害）/ 不反伤 / 相邻溅射 1 / 被击者 -1」均为一次性，用完即失效（P5-24）",
+      "branches": [
+        {
+          "label": "转式",
+          "durability": 1,
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "self",
+              "stat": "hp",
+              "delta": 1,
+              "duration": "permanent"
+            }
+          ]
+        },
+        {
+          "label": "扫式",
+          "durability": 3,
+          "ops": [
+            {
+              "op": "modStat",
+              "ref": "self",
+              "stat": "dmgDealt",
+              "delta": 1,
+              "duration": "nextAttack"
+            },
+            {
+              "op": "flag",
+              "ref": "self",
+              "key": "noReflect",
+              "duration": "nextAttack"
+            },
+            {
+              "op": "flag",
+              "ref": "self",
+              "key": "splash",
+              "value": 1,
+              "duration": "nextAttack"
+            },
+            {
+              "op": "flag",
+              "ref": "self",
+              "key": "atkDownOnHit",
+              "value": 1,
+              "duration": "nextAttack"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gudongshang/身轻如燕",
+      "character": "古董商",
+      "name": "身轻如燕",
+      "type": "passive",
+      "impl": "full",
+      "manual": false,
+      "trigger": "always",
+      "target": {
+        "mode": "self"
+      },
+      "ops": [
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noSkillSeal"
+        },
+        {
+          "op": "flag",
+          "ref": "self",
+          "key": "noInvulnerable"
+        }
+      ],
+      "notes": "不会获得不可攻击效果"
+    }
+  ]
+}

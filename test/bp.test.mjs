@@ -7,6 +7,8 @@ import {
   applyBp,
   advanceSeries,
   blockReason,
+  canConfirmBpStep,
+  canUndoBp,
   createBp,
   createSeries,
   currentStep,
@@ -154,7 +156,7 @@ describe('BP 流程', () => {
     assert.equal(blockReason(s, 'p1', 'pick', catalog[0], catalog), null);
   });
 
-  it('对方已 BAN 的名字仍可 BAN；同一个玩家不能重复 BAN（用户口径）', () => {
+  it('对方已 BAN 的名字仍可 BAN；同一个玩家不能重复 BAN（用户口径，2026-11-21 复议维持）', () => {
     let s = createBp({ mode: 'single' });
     s = applyBp(s, { type: 'ban', charId: catalog[0].id }, catalog);
     s = applyBp(s, { type: 'ban', charId: catalog[1].id }, catalog);
@@ -280,5 +282,141 @@ describe('全局 BAN 与系列赛', () => {
     const s = driveAll(createBp({ mode: 'single' }));
     assert.ok(s.players.p1.picks.length <= BP_MAX_PICKS);
     assert.ok(s.players.p2.picks.length <= BP_MAX_PICKS);
+  });
+});
+
+// P7-G：BP「撤回上一步 + 每步确认」。
+describe('P7 BP 撤回与确认', () => {
+  it('manualConfirm：选满也不自动前进，确认后才进入下一步', () => {
+    let s = createBp({ mode: 'single', manualConfirm: true });
+    s = applyBp(s, { type: 'ban', charId: 'n1' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n2' }, fake);
+    assert.equal(s.stepIndex, 0, '未确认前仍停在本步');
+    assert.deepEqual(s.players.p1.bans, ['普通A', '普通B']);
+    assert.equal(canConfirmBpStep(s), true);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    assert.equal(s.stepIndex, 1, '确认后进入下一步');
+    assert.deepEqual(s.stepChars, []);
+  });
+
+  it('撤回上一步：只退本步的最后一个选择，BAN/PICK 与预算一并回滚', () => {
+    let s = createBp({ mode: 'single', manualConfirm: true });
+    s = applyBp(s, { type: 'ban', charId: 'n1' }, fake);
+    assert.equal(canUndoBp(s), true);
+    s = applyBp(s, { type: 'undo' }, fake);
+    assert.deepEqual(s.players.p1.bans, []);
+    assert.equal(canUndoBp(s), false);
+    assert.throws(() => applyBp(s, { type: 'undo' }, fake), /没有可撤回/);
+
+    // 走到 PICK 步再验证预算回滚
+    s = applyBp(s, { type: 'ban', charId: 'n1' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n2' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n3' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n4' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    assert.equal(currentStep(s).action, 'pick');
+    s = applyBp(s, { type: 'pick', charId: 'e1' }, fake);
+    assert.equal(s.players.p1.spent, 3000);
+    s = applyBp(s, { type: 'undo' }, fake);
+    assert.deepEqual(s.players.p1.picks, []);
+    assert.equal(s.players.p1.spent, 0);
+  });
+
+  it('确认后不可撤回：已确认步的 BAN 无法退回', () => {
+    let s = createBp({ mode: 'single', manualConfirm: true });
+    s = applyBp(s, { type: 'ban', charId: 'n1' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n2' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    assert.equal(canUndoBp(s), false);
+    assert.throws(() => applyBp(s, { type: 'undo' }, fake), /没有可撤回/);
+    assert.deepEqual(s.players.p1.bans, ['普通A', '普通B']);
+  });
+
+  it('atMost 步可以少于上限直接确认', () => {
+    let s = createBp({ mode: 'single', manualConfirm: true });
+    // 前 6 步按最小值走完：ban1*2 + pick2 + pick2 + ban2*2
+    s = applyBp(s, { type: 'ban', charId: 'n1' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n2' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'e2' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'l1' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    s = applyBp(s, { type: 'pick', charId: 'n1' }, fake);
+    s = applyBp(s, { type: 'pick', charId: 'n2' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    s = applyBp(s, { type: 'pick', charId: 'n3' }, fake);
+    s = applyBp(s, { type: 'pick', charId: 'n4' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n5' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'e1' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'l2' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'l3' }, fake);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    const step = currentStep(s);
+    assert.equal(step.atMost, true);
+    s = applyBp(s, { type: 'pick', charId: 'n5' }, fake);
+    assert.equal(canConfirmBpStep(s), true);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    assert.equal(s.stepIndex, 7);
+  });
+
+  it('选满后继续选被拒绝：第一次 BAN 不会溢出、可继续撤回重选', () => {
+    let s = createBp({ mode: 'single', manualConfirm: true });
+    s = applyBp(s, { type: 'ban', charId: 'n1' }, fake);
+    s = applyBp(s, { type: 'ban', charId: 'n2' }, fake);
+    const before = s;
+    assert.throws(() => applyBp(s, { type: 'ban', charId: 'n3' }, fake), /本步已选满/);
+    assert.throws(() => applyBp(s, { type: 'ban', charId: 'e1' }, fake), /本步已选满/);
+    assert.equal(s, before, '被拒绝的动作不得改动状态');
+    assert.deepEqual(s.players.p1.bans, ['普通A', '普通B']);
+    assert.equal(legalBpChoices(s, fake).remaining, 0);
+    // 撤回一个后腾出名额，可再选，且仍停在本步
+    s = applyBp(s, { type: 'undo' }, fake);
+    assert.equal(legalBpChoices(s, fake).remaining, 1);
+    s = applyBp(s, { type: 'ban', charId: 'n3' }, fake);
+    assert.equal(s.stepIndex, 0);
+    assert.deepEqual(s.players.p1.bans, ['普通A', '普通C']);
+    s = applyBp(s, { type: 'confirmStep' }, fake);
+    assert.equal(s.stepIndex, 1, '确认后进入对方第一次 BAN');
+  });
+
+  it('atMost 选人步选满上限后也被拒绝，只能确认', () => {
+    const cheap = Array.from({ length: 12 }, (_, i) => ({
+      id: 'c' + i, name: '便' + i, rarity: 'normal', cost: 1000,
+    }));
+    let s = createBp({ mode: 'single', manualConfirm: true });
+    s = applyBp(s, { type: 'ban', charId: 'c0' }, cheap);
+    s = applyBp(s, { type: 'ban', charId: 'c1' }, cheap);
+    s = applyBp(s, { type: 'confirmStep' }, cheap);
+    s = applyBp(s, { type: 'ban', charId: 'c2' }, cheap);
+    s = applyBp(s, { type: 'ban', charId: 'c3' }, cheap);
+    s = applyBp(s, { type: 'confirmStep' }, cheap);
+    s = applyBp(s, { type: 'pick', charId: 'c4' }, cheap);
+    s = applyBp(s, { type: 'pick', charId: 'c5' }, cheap);
+    s = applyBp(s, { type: 'confirmStep' }, cheap);
+    s = applyBp(s, { type: 'pick', charId: 'c6' }, cheap);
+    s = applyBp(s, { type: 'pick', charId: 'c7' }, cheap);
+    s = applyBp(s, { type: 'confirmStep' }, cheap);
+    s = applyBp(s, { type: 'ban', charId: 'c8' }, cheap);
+    s = applyBp(s, { type: 'ban', charId: 'c9' }, cheap);
+    s = applyBp(s, { type: 'confirmStep' }, cheap);
+    s = applyBp(s, { type: 'ban', charId: 'c10' }, cheap);
+    s = applyBp(s, { type: 'ban', charId: 'c11' }, cheap);
+    s = applyBp(s, { type: 'confirmStep' }, cheap);
+    assert.equal(currentStep(s).atMost, true);
+    s = applyBp(s, { type: 'pick', charId: 'c4' }, cheap);
+    s = applyBp(s, { type: 'pick', charId: 'c5' }, cheap);
+    s = applyBp(s, { type: 'pick', charId: 'c6' }, cheap);
+    assert.equal(legalBpChoices(s, cheap).remaining, 0);
+    assert.throws(() => applyBp(s, { type: 'pick', charId: 'c7' }, cheap), /本步已选满/);
+    s = applyBp(s, { type: 'confirmStep' }, cheap);
+    assert.equal(s.stepIndex, 7);
+  });
+
+  it('createSeries 透传 manualConfirm，并在下一小局保持', () => {
+    const series = createSeries('bo3', true);
+    assert.equal(series.current.manualConfirm, true);
   });
 });
